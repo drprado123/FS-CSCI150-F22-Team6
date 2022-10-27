@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -85,9 +86,27 @@ fun WeekComponent(
 }
 
 @Composable
-fun MonthComponent(){
+fun MonthComponent(monthNum: Int = 1){
+    var monthName = when(monthNum){
+        1 -> "January"
+        2 -> "February"
+        3 -> "March"
+        4 -> "April"
+        5 -> "May"
+        6 -> "June"
+        7 -> "July"
+        8 -> "August"
+        9 -> "September"
+        10 -> "October"
+        11 -> "November"
+        12 -> "December"
+        else -> "Invalid month"
+    }
     Column {
-        Spacer(modifier = Modifier.height(64.dp))
+        Text(
+            text = monthName,
+            modifier = Modifier.wrapContentWidth(align = Alignment.CenterHorizontally)
+        )
         WeekComponent(Modifier.weight(1f))
         WeekComponent(Modifier.weight(1f))
         WeekComponent(Modifier.weight(1f))
