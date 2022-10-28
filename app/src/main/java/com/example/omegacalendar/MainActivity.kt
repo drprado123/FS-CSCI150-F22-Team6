@@ -1,6 +1,8 @@
 package com.example.omegacalendar
 
 import android.os.Bundle
+import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
@@ -36,10 +38,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+class GCalendar{
+    val calendar = Calendar.getInstance()
+}
 @Composable
 fun DayComponent(day: Int, modifier: Modifier = Modifier){
-    Column(modifier = modifier
+    Column(
+        modifier = modifier
         .clickable(onClick = {})
         .padding(2.dp)
         .border(
@@ -86,27 +91,44 @@ fun WeekComponent(
 }
 
 @Composable
-fun MonthComponent(monthNum: Int = 1){
-    var monthName = when(monthNum){
-        1 -> "January"
-        2 -> "February"
-        3 -> "March"
-        4 -> "April"
-        5 -> "May"
-        6 -> "June"
-        7 -> "July"
-        8 -> "August"
-        9 -> "September"
-        10 -> "October"
-        11 -> "November"
-        12 -> "December"
+fun MonthComponent(monthNum: Int = 1, yearNum: Int = 2022){
+    val rightNow = GregorianCalendar.getInstance()
+    //println("ERA: " + rightNow.get(Calendar.ERA))
+
+    var monthName = when(rightNow.get(Calendar.MONTH)){
+        0 -> "January"
+        1 -> "February"
+        2 -> "March"
+        3 -> "April"
+        4 -> "May"
+        5 -> "June"
+        6 -> "July"
+        7 -> "August"
+        8 -> "September"
+        9 -> "October"
+        10 -> "November"
+        11 -> "December"
         else -> "Invalid month"
     }
+
     Column {
-        Text(
-            text = monthName,
-            modifier = Modifier.wrapContentWidth(align = Alignment.CenterHorizontally)
-        )
+        Box(modifier = Modifier.fillMaxWidth()){
+            Text(
+                text = monthName,
+                modifier = Modifier
+                    .wrapContentWidth() //align = Alignment.CenterHorizontally)
+                    .align(Alignment.Center),
+                fontSize = 32.sp
+            )
+            Text(
+                text = yearNum.toString(),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 12.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(12.dp))
         WeekComponent(Modifier.weight(1f))
         WeekComponent(Modifier.weight(1f))
         WeekComponent(Modifier.weight(1f))
@@ -120,6 +142,7 @@ fun MonthComponent(monthNum: Int = 1){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+
     OmegaCalendarTheme {
         MonthComponent()
     }
