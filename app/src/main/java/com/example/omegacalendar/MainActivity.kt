@@ -11,6 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
+import com.example.omegacalendar.data.Event
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
