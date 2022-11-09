@@ -34,18 +34,19 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val rightNow = GregorianCalendar.getInstance()
-                    OmegaCalendarTheme {
-                        MonthComponent(rightNow as GregorianCalendar)
-                    }
+                    val month = Month(
+                        rightNow.get(Calendar.MONTH),
+                        rightNow.get(Calendar.YEAR)
+                    )
+
+                    OmegaCalendarTheme { MonthComponent(rightNow as GregorianCalendar)}
                 }
             }
         }
     }
 }
-class Month(cal: GregorianCalendar){
-    val month = cal.get(Calendar.MONTH)
-    //val eWeek1 =
-}
+
+
 @Composable
 fun DayComponent(day: Int, modifier: Modifier = Modifier){
     Column(
@@ -84,66 +85,62 @@ fun DayComponent(day: Int, modifier: Modifier = Modifier){
 fun WeekComponent(
     modifier: Modifier = Modifier,
     edgeWeek: Boolean = false,
+    mn: Int = 0,
     startDay: Int = 1,
     lastDay: Int = 28
 ):Int{
     var sDay = startDay
+    //val numOfDays = getNumOfDays(mn)
+    //row of days
     Row(modifier = modifier){
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 1
+        //if (sDay < 0) sDay +
         DayComponent(day = sDay, Modifier.weight(1f))
 
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 0
         DayComponent(day = ++sDay, Modifier.weight(1f))
 
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 0
         DayComponent(day = ++sDay, Modifier.weight(1f))
 
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 0
         DayComponent(day = ++sDay, Modifier.weight(1f))
 
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 0
         DayComponent(day = ++sDay, Modifier.weight(1f))
 
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 0
         DayComponent(day = ++sDay, Modifier.weight(1f))
 
-        sDay = if (sDay + 1 > lastDay) 0 else sDay
+        if (sDay + 1 > lastDay) sDay = 0
         DayComponent(day = ++sDay, Modifier.weight(1f))
     }
     return sDay + 1
 }
 
 @Composable
-fun MonthComponent(cal: GregorianCalendar){//, yearNum: Int = 2022){
+fun MonthComponent (cal: GregorianCalendar){//, yearNum: Int = 2022){
     var y by remember { mutableStateOf(cal.get(Calendar.YEAR)) }
     var m by remember { mutableStateOf(cal.get(Calendar.MONTH)) }
-    //var d by remember { mutableStateOf(cal.get(Calendar.DAY_OF_MONTH)) }
-    //println("ERA: " + rightNow.get(Calendar.ERA))
 
-    var monthName = when (m) {
-        0 -> "January"
-        1 -> "February"
-        2 -> "March"
-        3 -> "April"
-        4 -> "May"
-        5 -> "June"
-        6 -> "July"
-        7 -> "August"
-        8 -> "September"
-        9 -> "October"
-        10 -> "November"
-        11 -> "December"
-        else -> "Invalid month"
-    }
-    var firstDay = 2 - (getFirstDayOfMonth(y, m))
-    var lastDay = getNumOfDays(cal)
+    val mn = Month(m, y)
+
+    var fDay = mn.firstDay
+    var lastDay = getNumOfDays(m, y)
 
     Column {
+        //top row; button-month-button-year
         Box(modifier = Modifier.fillMaxWidth()){
             Row(modifier = Modifier.align(Alignment.Center)){
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        m--
+                        if(m == -1){
+                            m = 11
+                            --y
+                        }
+                    },
                     modifier = Modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
                     //    .align(Alignment.CenterVertically)
                 ) {
@@ -151,7 +148,7 @@ fun MonthComponent(cal: GregorianCalendar){//, yearNum: Int = 2022){
                 }
 
                 Text(
-                    text = monthName,
+                    text = mn.monthName,
                     modifier = Modifier
                         .wrapContentWidth() //align = Alignment.CenterHorizontally)
                         .padding(horizontal = 12.dp)
@@ -159,7 +156,17 @@ fun MonthComponent(cal: GregorianCalendar){//, yearNum: Int = 2022){
                     fontSize = 32.sp
                 )
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        m++
+                        if(m == 12){
+                            m = 0
+                            ++y
+                        }
+                        //m = when(m){
+                        //    12 -> 0
+                        //    else -> m
+                        //}
+                    },
                     modifier = Modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
                     //    .align(Alignment.CenterVertically)
                 ) {
@@ -174,6 +181,7 @@ fun MonthComponent(cal: GregorianCalendar){//, yearNum: Int = 2022){
                     .padding(end = 12.dp)
             )
         }
+        //second row; names of the months
         Row (modifier = Modifier.padding(start = 8.dp)){
             Text(text = "Sun", modifier = Modifier.weight(1f))
             Text(text = "Mon", modifier = Modifier.weight(1f))
@@ -184,35 +192,38 @@ fun MonthComponent(cal: GregorianCalendar){//, yearNum: Int = 2022){
             Text(text = "Sat", modifier = Modifier.weight(1f).padding(start = 10.dp))
         }
         Spacer(modifier = Modifier.height(12.dp))
-        firstDay = WeekComponent(modifier = Modifier.weight(1f), edgeWeek = true, startDay = firstDay)
-        firstDay = WeekComponent(modifier = Modifier.weight(1f), startDay = firstDay)
-        firstDay = WeekComponent(modifier = Modifier.weight(1f), startDay = firstDay)
-        firstDay = WeekComponent(modifier = Modifier.weight(1f), startDay = firstDay, lastDay = lastDay)
-        firstDay = WeekComponent(modifier = Modifier.weight(1f), startDay = firstDay, lastDay = lastDay)
-        firstDay = WeekComponent(modifier = Modifier.weight(1f), edgeWeek = true, startDay = firstDay, lastDay = lastDay)
+
+        //column of weeks
+        fDay = WeekComponent(modifier = Modifier.weight(1f), mn = m, startDay = fDay)
+        fDay = WeekComponent(modifier = Modifier.weight(1f), mn = m, startDay = fDay)
+        fDay = WeekComponent(modifier = Modifier.weight(1f), mn = m, startDay = fDay)
+        fDay = WeekComponent(modifier = Modifier.weight(1f), mn = m, startDay = fDay, lastDay = lastDay)
+        fDay = WeekComponent(modifier = Modifier.weight(1f), mn = m, startDay = fDay, lastDay = lastDay)
+        fDay = WeekComponent(modifier = Modifier.weight(1f), mn = m, startDay = fDay, lastDay = lastDay)
         Spacer(modifier = Modifier.height(64.dp))
     }
 }
 
-fun getNumOfDays(cal: GregorianCalendar):Int{
-    val mn = cal.get(Calendar.MONTH)
-    val yr = cal.get(Calendar.YEAR)
+fun getNumOfDays(mn:Int, yr:Int):Int{
+
     return when(mn){
         0, 2, 4, 6, 7, 9, 11 ->  31
         3, 5, 8, 10 -> 30
-        else -> if (cal.isLeapYear(yr)) 29 else 28//(isLeapYear(cal.get(Calendar.YEAR))) 29 else 28
+        else -> if (yr % 4 == 0 && yr % 100 != 0 || yr % 400 == 0 ) 29 else 28
     }
 }
-fun getFirstDayOfMonth(yr : Int, mn : Int):Int { //day of the week of the
+fun getFirstDayOfMonth(mn : Int, yr : Int):Int { //day of the week of the
     val cal = GregorianCalendar(yr, mn, 1)  //first day of the month
     return cal.get(Calendar.DAY_OF_WEEK)
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val rightNow = GregorianCalendar.getInstance()
+    val rightNow = GregorianCalendar(2022,11,5)//.getInstance()
+
     OmegaCalendarTheme {
-        MonthComponent(rightNow as GregorianCalendar)
+        MonthComponent(rightNow)
     }
 }
