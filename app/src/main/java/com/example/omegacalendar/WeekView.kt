@@ -1,4 +1,4 @@
-package com.example.calendarweekview
+package com.example.omegacalendar
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,11 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.example.calendarweekview.ui.theme.CalendarWeekViewTheme
+import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 
 val padUnit = 25
 
-class MainActivity : ComponentActivity() {
+class WeekView : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(content: @Composable () -> Unit){     //THIS IS A CONTAINER FUNCTION
-    CalendarWeekViewTheme {
+    OmegaCalendarTheme {
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -48,31 +48,35 @@ fun MyApp(content: @Composable () -> Unit){     //THIS IS A CONTAINER FUNCTION
 }
 
 @Composable
-fun ViewContent(names: List<String> = List(1000){"Hello Android $it"}){
-    val hours: List<String> = List(24){"$it:00"}
-    val days: List<String> = listOf("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
+fun ViewContent(names: List<String> = List(1000){"Hello Android $it"}) {
+    //listOf("Sunday","Monday")
+    val hours: List<String> = List(24) { "$it:00" }
+    val days: List<String> =
+        listOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 
-    // HEADER
-    LazyRow(modifier = Modifier.height(40.dp).zIndex(1f)) {
-        items(items = days) {
-            Text(text = it, modifier = Modifier.padding(padUnit.dp))
-        }
-    }
-    Surface(color = Color(241, 249, 255)) {
-        Row(modifier = Modifier.fillMaxHeight()) {
-            // HOURS COLUMN
-            Surface(color = Color(188, 224, 253)) {
-                LazyColumn(modifier = Modifier.width(75.dp)) {
-                    items(items = hours) {
-                        Text(
-                            text = it,
-                            modifier = Modifier
-                                .padding(5.dp, padUnit.dp, padUnit.dp, padUnit.dp)
-                        )
-                    }
-                }
+    Row() {
+        LazyColumn(modifier = Modifier
+            .width(75.dp)
+            .background(Color(188, 224, 253))) {
+            items(items = hours) {
+                Text(
+                    text = it,
+                    modifier = Modifier
+                        .padding(5.dp, padUnit.dp, padUnit.dp, padUnit.dp)
+                )
             }
-            DayData(names = names, modifier = Modifier.weight(1f))
+        }
+
+        // HEADER
+        LazyRow(modifier = Modifier
+            .height(75.dp)
+            .zIndex(1f)) {
+            items(items = days) {
+                Text(text = it, modifier = Modifier.padding(padUnit.dp))
+//                DayData(names = names, modifier = Modifier
+//                    .weight(1f)
+//                    .background(Color(241, 249, 255)))
+            }
         }
     }
 }
