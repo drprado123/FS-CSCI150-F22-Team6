@@ -10,7 +10,7 @@ import androidx.room.*
  */
 @Dao
 interface EventDao {
-
+    // functions implemented in viewmodel for easy access and reuse, we utilize coroutines
     @Insert
     suspend fun insertEvent(event: Event)
 
@@ -21,7 +21,7 @@ interface EventDao {
     suspend fun deleteEvent(event: Event)
 
     //add queries here
-    @Query("SELECT * FROM events_table ORDER BY event_month")
+    @Query("SELECT * FROM events_table ORDER BY event_year")
     fun getEvents() : LiveData<List<Event>>
 
     @Query("SELECT * FROM events_table WHERE event_id = :eid")
@@ -29,7 +29,8 @@ interface EventDao {
 
     @Query ("SELECT * FROM events_table WHERE event_month = :mon AND event_year = :year")
     fun getEventsByMonth(mon: Int, year: Int): LiveData<List<Event>>
-
+    @Query("SELECT * FROM events_table where event_month = :mon")
+    fun getMonths(mon: Int): LiveData<List<Event>>
     @Query ("SELECT * FROM events_table where event_month = :mon AND event_day = :day AND event_year = :year")
     fun getEventsByDay(mon: Int, day: Int, year: Int):LiveData<List<Event>>
 
