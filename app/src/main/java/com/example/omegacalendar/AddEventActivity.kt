@@ -89,7 +89,7 @@ class AddEventActivity : AppCompatActivity() {
     private fun initRecyclerView(rcView: RecyclerView, vModel: EventViewModel, mon: Int){ //still figuring this out
         //eventRecyclerView.layoutManager = LinearLayoutManager(this)
         rcView.layoutManager = LinearLayoutManager(this)
-        var adapter = EventRecyclerViewAdapter()
+        val adapter = EventRecyclerViewAdapter()
         rcView.adapter = adapter
 
         displayEventsList(vModel, adapter, mon)
