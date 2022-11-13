@@ -29,7 +29,7 @@ class OMonth (mn:Int, yr:Int) {
     val w4 = getWeek(startDay = w3[6]+1)
     val w5 = getWeek(startDay = w4[6]+1)
     val w6 = getWeek(startDay = w5[6]+1)
-    val wholeMonth = listOf(w1, w2, w3, w4, w5, w6)//wholeMonth[week#][day#]
+    val wholeMonth = listOf(w1, w2, w3, w4, w5, w6)// whole month matrix; wholeMonth[week#][day#]
 
 
     private fun getNextMonth(m:Int = month):Int{
