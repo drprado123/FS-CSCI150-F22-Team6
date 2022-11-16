@@ -46,7 +46,7 @@ class OMonth (mn:Int, yr:Int) {
     }
     fun getYear(weekNum:Int = 0, dayNum:Int = 0):Int{//returns what year the day is in
         return if (weekNum == 0 && dayNum in 21..31){//first week of month
-            when (prevMonth == 11){// previous month
+            when (prevMonth == 11){// previous month December
                 true -> year - 1
                 else -> year
             }
