@@ -21,9 +21,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 import com.example.omegacalendar.data.Event
 import androidx.room.Database
@@ -43,14 +45,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val rightNow = GregorianCalendar.getInstance()
-
                     MonthComponent(rightNow as GregorianCalendar)
-                    Button(onClick = {
-                        val navigate = Intent(this@MainActivity, AddEventActivity::class.java)
-                        startActivity(navigate)
-                    }) {
-                        Text(text = "Go to week!", fontSize = 24.sp)
-                    }
                 }
             }
         }
@@ -115,12 +110,22 @@ fun WeekComponent(
 fun MonthComponent (cal: GregorianCalendar){//, yearNum: Int = 2022){
     var y by remember { mutableStateOf(cal.get(Calendar.YEAR)) }
     var m by remember { mutableStateOf(cal.get(Calendar.MONTH)) }
-
     val mn = OMonth(m, y)
+    val context = LocalContext.current
 
     Column {
         //top row; button-month-button-year
         Box(modifier = Modifier.fillMaxWidth()){
+            Button(
+                onClick = {
+                    context.startActivity(Intent(context, AddEvent::class.java))
+                },
+                modifier = Modifier
+                    .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+                    .wrapContentWidth()
+                    .align(Alignment.CenterStart)
+                    .padding(end = 12.dp)
+            ) {Text(text = "Add", fontSize = 12.sp)}
             Row(modifier = Modifier.align(Alignment.Center)){
                 Button(
                     onClick = {
