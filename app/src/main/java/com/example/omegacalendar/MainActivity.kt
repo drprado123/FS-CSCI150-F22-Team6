@@ -38,21 +38,30 @@ fun DailyScreen() {
 }
 
 
-@Composable
+@Composable     // THIS IS ALL THE DISPLAY AREA
 fun DailySlide(EventList: List<Events>, modifier: Modifier = Modifier) {
 
-    LazyColumn {
-        items(EventList) { Evento ->
-            EventSlide(Evento)
+    Column() {
+
+        
+
+        LazyColumn(
+            modifier = Modifier
+            .weight(8/12f), )
+        {
+            items(EventList) { Evento ->
+                EventSlide(Evento)
+            }
         }
     }
+
 }
 
 @Composable
 fun EventSlide (Evento: Events, modifier: Modifier = Modifier) {
     Card(modifier = Modifier.padding(8.dp), elevation = 4.dp) {
         Row {
-            //if (Evento.DayId == R.string.Tue) {
+            if (Evento.DayId == R.string.Tue) {
 
             Text(   // This is Responsable of displaying the Descritption of the Event
                 text = LocalContext.current.getString(Evento.EventsId),
@@ -60,7 +69,7 @@ fun EventSlide (Evento: Events, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
-                    .weight(10/16f),
+                    .weight(10 / 16f),
                 style = MaterialTheme.typography.h6
             )
             Text(
@@ -68,18 +77,18 @@ fun EventSlide (Evento: Events, modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Justify,
                 modifier = Modifier
                     .padding(2.dp)
-                    .weight(2/16f),
+                    .weight(2 / 16f),
                 style = MaterialTheme.typography.h6
             )
             Text(
                 text = LocalContext.current.getString(Evento.M),
                 modifier = Modifier
                     .padding(2.dp)
-                    .weight(2/16f),
+                    .weight(2 / 16f),
                 style = MaterialTheme.typography.h6
             )
 
-            //}
+            }
 
         }
     }
