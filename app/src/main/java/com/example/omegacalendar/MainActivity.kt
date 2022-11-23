@@ -1,5 +1,6 @@
 package com.example.omegacalendar
 
+import android.icu.util.GregorianCalendar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
-import com.example.omegacalendar.data.Event
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.omegacalendar.data.AppDatabase
+//import com.example.omegacalendar.data.Event
+//import androidx.room.Database
+//import androidx.room.Room
+//import androidx.room.RoomDatabase
+//import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,22 +28,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    val rightNow = GregorianCalendar.getInstance()
+
+                    MonthComponent(rightNow as GregorianCalendar)
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     OmegaCalendarTheme {
-        Greeting("Android")
+
     }
 }
