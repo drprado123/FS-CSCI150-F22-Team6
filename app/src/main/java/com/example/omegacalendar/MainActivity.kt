@@ -56,6 +56,7 @@ fun DayComponent(day: Int, modifier: Modifier = Modifier){
                 .align(alignment = Alignment.Start)
         )
         Spacer(modifier = Modifier.height(4.dp))
+        Text ( text = " TEST TEST DO YOU SEE THIS?")
         Text(
             text = "- " + "example text",
             modifier = Modifier
