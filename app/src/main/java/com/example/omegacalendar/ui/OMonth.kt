@@ -1,4 +1,4 @@
-package com.example.omegacalendar
+package com.example.omegacalendar.ui
 
 class OMonth (mn:Int, yr:Int) {
     var month = mn

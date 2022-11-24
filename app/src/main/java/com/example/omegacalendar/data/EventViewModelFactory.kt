@@ -10,7 +10,7 @@ class EventViewModelFactory(
 ):ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(EventViewModel::class.java)){
-            return EventViewModel(dao, month) as T
+            return EventViewModel(dao, /*month*/) as T
         }
         throw IllegalArgumentException("Unknown View Model Class")
     }

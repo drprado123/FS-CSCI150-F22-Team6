@@ -7,10 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.omegacalendar.ui.MonthComponent
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.Event
 //import androidx.room.Database
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val rightNow = GregorianCalendar.getInstance()
 
-                    MonthComponent(rightNow as GregorianCalendar)
+                    OmegaCalendarApp()//MonthComponent()//(rightNow as GregorianCalendar)
                 }
             }
         }

@@ -1,27 +1,22 @@
-package com.example.omegacalendar
+package com.example.omegacalendar.ui
 
-import android.os.Bundle
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
+import com.example.omegacalendar.data.MonthUiState
 
 @Composable
 fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier){
@@ -60,7 +55,7 @@ fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier){
 @Composable
 fun WeekComponent(
     modifier: Modifier = Modifier,
-    month:OMonth,
+    month: OMonth,
     weekNum:Int
 ){
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
@@ -77,11 +72,11 @@ fun WeekComponent(
 
 
 @Composable
-fun MonthComponent (cal: GregorianCalendar){//, yearNum: Int = 2022){
-    var y by remember { mutableStateOf(cal.get(Calendar.YEAR)) }
-    var m by remember { mutableStateOf(cal.get(Calendar.MONTH)) }
+fun MonthComponent(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
+    //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
+    //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
 
-    val mn = OMonth(m, y)
+    val mn = OMonth(monthUiState.mnNum, monthUiState.yrNum)
 
     Column {
         //top row; button-month-button-year
@@ -138,8 +133,12 @@ fun MonthComponent (cal: GregorianCalendar){//, yearNum: Int = 2022){
             Text(text = "Tues", modifier = Modifier.weight(1f))
             Text(text = "Wed", modifier = Modifier.weight(1f))
             Text(text = "Thurs", modifier = Modifier.weight(1f))
-            Text(text = "Fri", modifier = Modifier.weight(1f).padding(start = 10.dp))
-            Text(text = "Sat", modifier = Modifier.weight(1f).padding(start = 10.dp))
+            Text(text = "Fri", modifier = Modifier
+                .weight(1f)
+                .padding(start = 10.dp))
+            Text(text = "Sat", modifier = Modifier
+                .weight(1f)
+                .padding(start = 10.dp))
         }
         Spacer(modifier = Modifier.height(12.dp))
 
