@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.example.omegacalendar.data.EventViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,13 +25,6 @@ enum class OCalScreen(){
     Month,
     Day
 }
-private lateinit var viewModel : EventViewModel
-val dao = AppDatabase.getInstance(application).eventDao()
-//factory used to instantiate and pass dao to view model
-val factory = EventViewModelFactory(dao, 12)
-//val factory2 = EventViewModelFactory(AppDatabase.getInstance(application).eventDao(), 8)
-
-viewModel = ViewModelProvider(this,factory).get(EventViewModel::class.java)
 @Composable
 fun OmegaAppBar(
     canNavigateBack: Boolean,
@@ -52,7 +47,7 @@ fun OmegaAppBar(
     )
 }
 @Composable
-fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel = viewModel()){
+fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Create NavController
     val navController = rememberNavController()
     // TODO: Get current back stack entry

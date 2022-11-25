@@ -10,6 +10,10 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import com.example.omegacalendar.data.AppDatabase
+import com.example.omegacalendar.data.EventViewModel
+import com.example.omegacalendar.data.EventViewModelFactory
 import com.example.omegacalendar.ui.MonthComponent
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.Event
@@ -19,7 +23,12 @@ import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
+    private lateinit var viewModel : EventViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val dao = AppDatabase.getInstance(application).eventDao()
+        //factory used to instantiate and pass dao to view model
+        val factory = EventViewModelFactory(dao, 12)
         super.onCreate(savedInstanceState)
         setContent {
             OmegaCalendarTheme {
@@ -30,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //val rightNow = GregorianCalendar.getInstance()
 
-                    OmegaCalendarApp()//MonthComponent()//(rightNow as GregorianCalendar)
+                    OmegaCalendarApp(viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java))//MonthComponent()//(rightNow as GregorianCalendar)
                 }
             }
         }
