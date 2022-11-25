@@ -16,11 +16,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.omegacalendar.ui.MonthComponent
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.omegacalendar.data.AppDatabase
+import com.example.omegacalendar.data.EventViewModelFactory
 
 enum class OCalScreen(){
     Month,
     Day
 }
+private lateinit var viewModel : EventViewModel
+val dao = AppDatabase.getInstance(application).eventDao()
+//factory used to instantiate and pass dao to view model
+val factory = EventViewModelFactory(dao, 12)
+//val factory2 = EventViewModelFactory(AppDatabase.getInstance(application).eventDao(), 8)
+
+viewModel = ViewModelProvider(this,factory).get(EventViewModel::class.java)
 @Composable
 fun OmegaAppBar(
     canNavigateBack: Boolean,

@@ -43,10 +43,10 @@ class AddEventActivity : AppCompatActivity() {
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
         val factory = EventViewModelFactory(dao, 12)
-        val factory2 = EventViewModelFactory(AppDatabase.getInstance(application).eventDao(), 8)
+        //val factory2 = EventViewModelFactory(AppDatabase.getInstance(application).eventDao(), 8)
 
         viewModel = ViewModelProvider(this,factory).get(EventViewModel::class.java)
-        viewModel2 = ViewModelProvider(this,factory2).get(EventViewModel::class.java)
+        //viewModel2 = ViewModelProvider(this,factory2).get(EventViewModel::class.java)
 
         insertBtn.setOnClickListener {
             saveEvent()
