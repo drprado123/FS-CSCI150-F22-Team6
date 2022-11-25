@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val rightNow = GregorianCalendar.getInstance()
+                    //val rightNow = GregorianCalendar.getInstance()
 
                     OmegaCalendarApp()//MonthComponent()//(rightNow as GregorianCalendar)
                 }

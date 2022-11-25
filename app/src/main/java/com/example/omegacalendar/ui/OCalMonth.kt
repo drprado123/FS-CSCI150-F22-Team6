@@ -72,24 +72,23 @@ fun WeekComponent(
 
 
 @Composable
-fun MonthComponent(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
+fun MonthComponent(
+    onPrevMonthButtonClicked:() -> Unit,
+    onNextMonthButtonClicked:() -> Unit,
+    m:Int,
+    y:Int
+){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
     //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
     //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
 
-    val mn = OMonth(monthUiState.mnNum, monthUiState.yrNum)
+    val mn = OMonth(m, y)
 
     Column {
         //top row; button-month-button-year
         Box(modifier = Modifier.fillMaxWidth()){
             Row(modifier = Modifier.align(Alignment.Center)){
                 Button(
-                    onClick = {
-                        m--
-                        if(m == -1){
-                            m = 11
-                            --y
-                        }
-                    },
+                    onClick = { onPrevMonthButtonClicked() },
                     modifier = Modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
                     //    .align(Alignment.CenterVertically)
                 ) {
@@ -105,13 +104,7 @@ fun MonthComponent(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
                     fontSize = 32.sp
                 )
                 Button(
-                    onClick = {
-                        m++
-                        if(m == 12){
-                            m = 0
-                            ++y
-                        }
-                    },
+                    onClick = { onNextMonthButtonClicked() },
                     modifier = Modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
                     //    .align(Alignment.CenterVertically)
                 ) {

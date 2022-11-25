@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 //add args to  event model as needed to set what is seen in a view model MUST REFLECT CHANGES
 // IN VIEWMODEL FACTORY
@@ -33,5 +34,37 @@ class EventViewModel(
     }
     fun updateEvent(event: Event)=viewModelScope.launch{
         dao.updateEvent(event)
+    }
+    fun prevMonthButton(){
+        var m = _uiState.value.mnNum
+        var y = _uiState.value.yrNum
+
+        m--
+        if(m == -1){
+            m = 11
+            --y
+        }
+        _uiState.update { currentState ->
+            currentState.copy(
+                mnNum = m,
+                yrNum = y
+            )
+        }
+    }
+    fun nextMonthButton(){
+        var m = _uiState.value.mnNum
+        var y = _uiState.value.yrNum
+
+        m++
+        if(m == 12){
+            m = 0
+            ++y
+        }
+        _uiState.update { currentState ->
+            currentState.copy(
+                mnNum = m,
+                yrNum = y
+            )
+        }
     }
 }

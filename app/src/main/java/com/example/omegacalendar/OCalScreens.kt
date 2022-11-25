@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.omegacalendar.data.EventViewModel
-//import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -69,7 +68,14 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel = 
         ) {
             composable(route = OCalScreen.Month.name) {
                 MonthComponent(
-
+                    onNextMonthButtonClicked = {
+                        viewModel.nextMonthButton()
+                    },
+                    onPrevMonthButtonClicked = {
+                        viewModel.nextMonthButton()
+                    },
+                    m = uiState.mnNum,
+                    y = uiState.yrNum
                 )
             }
             //composable(route = CupcakeScreen.Flavor.name) {
