@@ -12,16 +12,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 //add args to  event model as needed to set what is seen in a view model MUST REFLECT CHANGES
 // IN VIEWMODEL FACTORY
+// can also query using viewmodel functions
 class EventViewModel(
     private val dao: EventDao,
-    //private val month: Int,
     cal: Calendar = GregorianCalendar.getInstance()
 ): ViewModel() {
     // val _ = dao.query() to send that to the recycler view.
 
     private val _uiState = MutableStateFlow(MonthUiState(yrNum = cal.get(Calendar.YEAR), mnNum = cal.get(Calendar.MONTH)))
     val uiState: StateFlow<MonthUiState> = _uiState.asStateFlow()
-
+    //viewmodel.events->observe() to get all events in the db
     val events = dao.getEvents()
     fun getEventsByMonth(month: Int): LiveData<List<Event>> {
         return dao.getMonths(month)

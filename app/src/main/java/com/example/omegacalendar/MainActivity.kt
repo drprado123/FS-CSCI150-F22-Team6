@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
-        val factory = EventViewModelFactory(dao, 12)
+        val factory = EventViewModelFactory(dao)
         super.onCreate(savedInstanceState)
         setContent {
             OmegaCalendarTheme {
