@@ -71,8 +71,10 @@ class AddEventActivity : AppCompatActivity() {
         val desc = descText.text.toString()
         val start = startText.text.toString().toInt()
         val end = endText.text.toString().toInt()
-
-        val event = Event(0,year, month,day,desc, start, end )
+        val startMin = 0
+        val endMin = 0
+        val calNam = "main";
+        val event = Event(0,year, month,day,desc, start, startMin, end, endMin, calNam);
 
         viewModel.insertEvent(event)
 

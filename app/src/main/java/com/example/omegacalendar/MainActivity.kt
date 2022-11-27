@@ -25,13 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
-import com.example.omegacalendar.data.Event
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.omegacalendar.data.AppDatabase
 
 
 class MainActivity : ComponentActivity() {
@@ -118,7 +112,7 @@ fun MonthComponent (cal: GregorianCalendar){//, yearNum: Int = 2022){
         Box(modifier = Modifier.fillMaxWidth()){
             Button(
                 onClick = {
-                    context.startActivity(Intent(context, AddEvent::class.java))
+                    context.startActivity(Intent(context, AddEventActivity::class.java))
                 },
                 modifier = Modifier
                     .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
