@@ -23,7 +23,7 @@ import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
-    private lateinit var viewModel : EventViewModel
+    //private lateinit var viewModel : EventViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val dao = AppDatabase.getInstance(application).eventDao()
@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //val rightNow = GregorianCalendar.getInstance()
-
                     OmegaCalendarApp(viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java))//MonthComponent()//(rightNow as GregorianCalendar)
                 }
             }
