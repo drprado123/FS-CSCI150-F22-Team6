@@ -6,20 +6,34 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Divider
+import androidx.compose.material.ListItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.omegacalendar.data.Event
+import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.MonthUiState
 
 @Composable
-fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier){
+fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier, viewModel: EventViewModel){
+    val event1 = Event(0, 2022, 8, 4, "lame", 2, 4)
+    val event2 = Event(0, 2022, 8, 4, "test", 2, 4)
+    val event3 = Event(0, 2022, 8, 4, "mega lame", 2, 4)
+    viewModel.insertEvent(event1)
+    viewModel.insertEvent(event2)
+    viewModel.insertEvent(event3)
+    val events = viewModel.events.observeAsState(listOf()).value
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -49,24 +63,43 @@ fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier){
                 .background(color = Color(238, 130, 238)),
             fontSize = 8.sp
         )
+        EventList(events, viewModel)
+
     }
 }
-
+@Composable
+fun EventListItem(event: Event){
+    Row{
+        Column{
+            Text(text = event.desc)
+        }
+    }
+}
+@Composable
+fun EventList(events: List<Event>, viewModel: EventViewModel){
+    LazyColumn() {
+        items(events) { event ->
+            EventListItem(event)
+            Divider()
+        }
+    }
+}
 @Composable
 fun WeekComponent(
     modifier: Modifier = Modifier,
     month: OMonth,
-    weekNum:Int
+    weekNum:Int,
+    viewModel: EventViewModel
 ){
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
     Row(modifier = modifier){
-        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), Modifier.weight(1f))
-        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), Modifier.weight(1f))
-        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), Modifier.weight(1f))
-        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), Modifier.weight(1f))
-        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), Modifier.weight(1f))
-        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), Modifier.weight(1f))
-        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), Modifier.weight(1f))
+        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), Modifier.weight(1f), viewModel)
+        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), Modifier.weight(1f), viewModel)
+        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), Modifier.weight(1f), viewModel)
+        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), Modifier.weight(1f), viewModel)
+        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), Modifier.weight(1f), viewModel)
+        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), Modifier.weight(1f), viewModel)
+        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), Modifier.weight(1f), viewModel)
     }
 }
 
@@ -75,12 +108,16 @@ fun WeekComponent(
 fun MonthComponent(
     onPrevMonthButtonClicked:() -> Unit,
     onNextMonthButtonClicked:() -> Unit,
+    viewModel: EventViewModel,
     m:Int,
     y:Int
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
     //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
     //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
 
+    val events = viewModel.events.observeAsState(listOf()).value
+    val oneEvent = Event(1, 2000, 12, 4, "test", 1, 2)
+    val new = events + oneEvent
     val mn = OMonth(m, y)
 
     Column {
@@ -136,12 +173,12 @@ fun MonthComponent(
         Spacer(modifier = Modifier.height(12.dp))
 
         //column of weeks
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0, viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1, viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2, viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3, viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4, viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5, viewModel)
         Spacer(modifier = Modifier.height(64.dp))
     }
 }

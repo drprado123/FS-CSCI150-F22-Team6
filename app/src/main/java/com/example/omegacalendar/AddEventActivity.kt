@@ -42,7 +42,7 @@ class AddEventActivity : AppCompatActivity() {
         // use instance of application to get the current dao
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
-        val factory = EventViewModelFactory(dao, 12)
+        val factory = EventViewModelFactory(dao)
         //val factory2 = EventViewModelFactory(AppDatabase.getInstance(application).eventDao(), 8)
 
         viewModel = ViewModelProvider(this,factory).get(EventViewModel::class.java)
