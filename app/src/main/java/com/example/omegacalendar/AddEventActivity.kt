@@ -20,11 +20,11 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var insertBtn : Button
     // initialize viewmodel to insert, delete, update, and view events from DAO
     private lateinit var viewModel : EventViewModel
-    private lateinit var viewModel2 : EventViewModel
+    //private lateinit var viewModel2 : EventViewModel
     private lateinit var eventRecyclerView: RecyclerView
-    private lateinit var eventRecyclerView2: RecyclerView
+   //rivate lateinit var eventRecyclerView2: RecyclerView
     private lateinit var adapter1: EventRecyclerViewAdapter
-    private lateinit var adapter2: EventRecyclerViewAdapter
+    //private lateinit var adapter2: EventRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_event_activity)
@@ -38,7 +38,7 @@ class AddEventActivity : AppCompatActivity() {
         insertBtn = findViewById(R.id.add_event)
 
         eventRecyclerView = findViewById(R.id.rvEvent)
-        eventRecyclerView2 = findViewById(R.id.rvEvent2)
+        //eventRecyclerView2 = findViewById(R.id.rvEvent2)
         // use instance of application to get the current dao
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
@@ -59,10 +59,10 @@ class AddEventActivity : AppCompatActivity() {
         eventRecyclerView.adapter = adapter1
         displayEventsList(viewModel,adapter1, 12)
 
-        eventRecyclerView2.layoutManager =  LinearLayoutManager(this)
-        adapter2 = EventRecyclerViewAdapter()
-        eventRecyclerView2.adapter = adapter2
-        displayEventsList(viewModel2,adapter2, 8)
+        //eventRecyclerView2.layoutManager =  LinearLayoutManager(this)
+        //adapter2 = EventRecyclerViewAdapter()
+        //eventRecyclerView2.adapter = adapter2
+        //displayEventsList(viewModel2,adapter2, 8)
     }
     private fun saveEvent() { //create and store an event taken from data input
         val month = monthText.text.toString().toInt()
@@ -72,7 +72,7 @@ class AddEventActivity : AppCompatActivity() {
         val start = startText.text.toString().toInt()
         val end = endText.text.toString().toInt()
 
-        val event = Event(0,year, month,day,desc, start, end )
+        val event = Event(0,year, month,day,desc, start, end, 0,0, "lame")
 
         viewModel.insertEvent(event)
 

@@ -1,5 +1,7 @@
 package com.example.omegacalendar.ui
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.background
@@ -21,18 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.omegacalendar.AddEventActivity
+import com.example.omegacalendar.MainActivity
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.MonthUiState
 
 @Composable
 fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier, viewModel: EventViewModel){
-    val event1 = Event(0, 2022, 8, 4, "lame", 2, 4)
-    val event2 = Event(0, 2022, 8, 4, "test", 2, 4)
-    val event3 = Event(0, 2022, 8, 4, "mega lame", 2, 4)
-    viewModel.insertEvent(event1)
-    viewModel.insertEvent(event2)
-    viewModel.insertEvent(event3)
     val events = viewModel.events.observeAsState(listOf()).value
     Column(
         modifier = modifier
@@ -116,13 +114,21 @@ fun MonthComponent(
     //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
 
     val events = viewModel.events.observeAsState(listOf()).value
-    val oneEvent = Event(1, 2000, 12, 4, "test", 1, 2)
-    val new = events + oneEvent
     val mn = OMonth(m, y)
 
     Column {
         //top row; button-month-button-year
         Box(modifier = Modifier.fillMaxWidth()){
+            Button(
+                onClick = {
+                    MainActivity.applicationContext().startActivity(Intent(MainActivity.applicationContext(), AddEventActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK))
+                },
+                modifier = Modifier
+                    .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+                    .wrapContentWidth()
+                    .align(Alignment.CenterStart)
+                    .padding(end = 12.dp)
+            ) {Text(text = "Add", fontSize = 12.sp)}
             Row(modifier = Modifier.align(Alignment.Center)){
                 Button(
                     onClick = { onPrevMonthButtonClicked() },
