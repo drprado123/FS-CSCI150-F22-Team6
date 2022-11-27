@@ -19,7 +19,12 @@ import androidx.compose.ui.unit.sp
 import com.example.omegacalendar.data.MonthUiState
 
 @Composable
-fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier){
+fun DayComponent(
+    day: Int,
+    month:Int ,
+    year:Int,
+    modifier: Modifier = Modifier
+){
     Column(
         modifier = modifier
             .fillMaxHeight()
