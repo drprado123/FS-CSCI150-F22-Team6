@@ -56,7 +56,13 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Get the name of the current screen
 
     val event = Event(0,2022, 11,5,"bruh", 5, 10 )
+    val event1 = Event(0,2022, 11,5,"bro", 5, 10 )
+    val event2 = Event(0,2022, 11,5,"johnson", 5, 10 )
+    val event3 = Event(0,2022, 11,5,"busta", 5, 10 )
     viewModel.insertEvent(event)
+    viewModel.insertEvent(event1)
+    viewModel.insertEvent(event2)
+    viewModel.insertEvent(event3)
 
     Scaffold(
         topBar = {
@@ -82,7 +88,7 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     onPrevMonthButtonClicked = {
                         viewModel.prevMonthButton()
                     },
-                    dayEvents = {mn, day, yr -> viewModel.eventsByDay(mn,day,yr)},
+                    viewModel = viewModel,
                     m = uiState.mnNum,
                     y = uiState.yrNum
                 )

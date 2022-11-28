@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import com.example.omegacalendar.data.Event
+import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.MonthUiState
 
 @Composable
@@ -29,10 +30,10 @@ fun DayComponent(
     month:Int ,
     year:Int,
     modifier: Modifier = Modifier,
-    dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
+    viewModel: EventViewModel,//dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
     weekNum: Int
 ){
-    val events = dayEvents(month, day, year)
+    val events = viewModel.events.value//eventsByDay(month,day,year).value//dayEvents(month, day, year).value
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -84,11 +85,13 @@ fun EventListItem(event: Event){
     }
 }
 @Composable
-fun EventList(events: List<Event>){
-    LazyColumn() {
-        items(events) { event ->
-            EventListItem(event)
-            Divider()
+fun EventList(events: List<Event>?){
+    if (events != null) {
+        LazyColumn() {
+            items(events) { event ->
+                EventListItem(event)
+                Divider()
+            }
         }
     }
 }
@@ -97,18 +100,18 @@ fun EventList(events: List<Event>){
 fun WeekComponent(
     modifier: Modifier = Modifier,
     month: OMonth,
-    dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
+    viewModel: EventViewModel,
     weekNum:Int
 ){
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
     Row(modifier = modifier){
-        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), Modifier.weight(1f), dayEvents,weekNum)
-        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), Modifier.weight(1f), dayEvents,weekNum)
-        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), Modifier.weight(1f), dayEvents,weekNum)
-        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), Modifier.weight(1f), dayEvents,weekNum)
-        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), Modifier.weight(1f), dayEvents,weekNum)
-        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), Modifier.weight(1f), dayEvents,weekNum)
-        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), Modifier.weight(1f), viewModel, weekNum)
+        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), Modifier.weight(1f), viewModel, weekNum)
+        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), Modifier.weight(1f), viewModel, weekNum)
+        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), Modifier.weight(1f), viewModel, weekNum)
+        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), Modifier.weight(1f), viewModel, weekNum)
+        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), Modifier.weight(1f), viewModel, weekNum)
+        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), Modifier.weight(1f), viewModel, weekNum)
     }
 }
 
@@ -117,7 +120,7 @@ fun WeekComponent(
 fun MonthComponent(
     onPrevMonthButtonClicked:() -> Unit,
     onNextMonthButtonClicked:() -> Unit,
-    dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
+    viewModel: EventViewModel,
     m:Int,
     y:Int
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
@@ -182,12 +185,12 @@ fun MonthComponent(
         Spacer(modifier = Modifier.height(12.dp))
 
         //column of weeks
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0, dayEvents = dayEvents)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1, dayEvents = dayEvents)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2, dayEvents = dayEvents)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3, dayEvents = dayEvents)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4, dayEvents = dayEvents)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5, dayEvents = dayEvents)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0, viewModel = viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1, viewModel = viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2, viewModel = viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3, viewModel = viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4, viewModel = viewModel)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5, viewModel = viewModel)
         Spacer(modifier = Modifier.height(64.dp))
     }
 }
