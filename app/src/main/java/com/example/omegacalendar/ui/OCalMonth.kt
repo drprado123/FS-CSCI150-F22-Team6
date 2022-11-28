@@ -31,7 +31,8 @@ import com.example.omegacalendar.data.MonthUiState
 
 @Composable
 fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier, viewModel: EventViewModel){
-    val events = viewModel.events.observeAsState(listOf()).value
+    val events = viewModel.eventsByDay(month, day, year).observeAsState(listOf()).value
+
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -113,7 +114,7 @@ fun MonthComponent(
     //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
     //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
 
-    val events = viewModel.events.observeAsState(listOf()).value
+    //val events = viewModel.events.observeAsState(listOf()).value
     val mn = OMonth(m, y)
 
     Column {
