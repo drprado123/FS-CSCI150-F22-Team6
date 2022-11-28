@@ -23,7 +23,9 @@ fun DayComponent(
     day: Int,
     month:Int ,
     year:Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    dayEvents:(mn:Int,day:Int,yr:Int) -> Unit,
+    weekNum: Int
 ){
     Column(
         modifier = modifier
@@ -42,18 +44,28 @@ fun DayComponent(
             modifier = Modifier
                 .padding(start = 8.dp, top = 4.dp)
                 //.fillMaxWidth()
-                .align(alignment = Alignment.Start)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "month: $month \n year: $year",//"- " + "example text",
+                .align(alignment = Alignment.Start),
+            color = if (weekNum == 0 && day in 21..31){//first week of month
+                Color.LightGray
+            }
+            else if (weekNum in 4..5 && day in 1..14){//last two weeks of month
+                Color.LightGray
+            }
+            else {
+                Color.Black
+            }
 
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp, top = 4.dp)
-                .background(color = Color(238, 130, 238)),
-            fontSize = 8.sp
         )
+        //Spacer(modifier = Modifier.height(4.dp))
+        //Text(
+        //    text = "month: $month \n year: $year",//"- " + "example text",
+//
+        //    modifier = Modifier
+        //        .fillMaxWidth()
+        //        .padding(start = 8.dp, top = 4.dp)
+        //        .background(color = Color(238, 130, 238)),
+        //    fontSize = 8.sp
+        //)
     }
 }
 
@@ -61,17 +73,18 @@ fun DayComponent(
 fun WeekComponent(
     modifier: Modifier = Modifier,
     month: OMonth,
+    dayEvents:(mn:Int,day:Int,yr:Int) -> Unit,
     weekNum:Int
 ){
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
     Row(modifier = modifier){
-        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), Modifier.weight(1f))
-        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), Modifier.weight(1f))
-        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), Modifier.weight(1f))
-        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), Modifier.weight(1f))
-        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), Modifier.weight(1f))
-        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), Modifier.weight(1f))
-        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), Modifier.weight(1f))
+        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), Modifier.weight(1f), dayEvents,weekNum)
+        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), Modifier.weight(1f), dayEvents,weekNum)
     }
 }
 
@@ -80,6 +93,7 @@ fun WeekComponent(
 fun MonthComponent(
     onPrevMonthButtonClicked:() -> Unit,
     onNextMonthButtonClicked:() -> Unit,
+    dayEvents:(mn:Int,day:Int,yr:Int) -> Unit,
     m:Int,
     y:Int
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
@@ -91,30 +105,33 @@ fun MonthComponent(
     Column {
         //top row; button-month-button-year
         Box(modifier = Modifier.fillMaxWidth()){
-            Row(modifier = Modifier.align(Alignment.Center)){
-                Button(
-                    onClick = { onPrevMonthButtonClicked() },
-                    modifier = Modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
-                    //    .align(Alignment.CenterVertically)
-                ) {
+            //Row(modifier = Modifier.align(Alignment.Center)){
+            //
+            //}
+            Button(
+                onClick = { onPrevMonthButtonClicked() },
+                modifier = Modifier//.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+                    .padding(start = 52.dp),
+                content = {
                     Text(text = "<", fontSize = 16.sp)
                 }
-
-                Text(
-                    text = mn.monthName,
-                    modifier = Modifier
-                        .wrapContentWidth() //align = Alignment.CenterHorizontally)
-                        .padding(horizontal = 12.dp)
-                    ,//.align(Alignment.Center),
-                    fontSize = 32.sp
-                )
-                Button(
-                    onClick = { onNextMonthButtonClicked() },
-                    modifier = Modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
-                    //    .align(Alignment.CenterVertically)
-                ) {
-                    Text(text = ">", fontSize = 16.sp)
-                }
+            )
+            Text(
+                text = mn.monthName,
+                modifier = Modifier
+                    .wrapContentWidth() //align = Alignment.CenterHorizontally)
+                    .padding(horizontal = 12.dp)
+                    .align(Alignment.Center),
+                fontSize = 32.sp
+            )
+            Button(
+                onClick = { onNextMonthButtonClicked() },
+                modifier = Modifier
+                    //.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 52.dp)
+            ) {
+                Text(text = ">", fontSize = 16.sp)
             }
             Text(
                 text = y.toString(),
@@ -141,12 +158,12 @@ fun MonthComponent(
         Spacer(modifier = Modifier.height(12.dp))
 
         //column of weeks
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4)
-        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0, dayEvents = dayEvents)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1, dayEvents = dayEvents)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2, dayEvents = dayEvents)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3, dayEvents = dayEvents)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4, dayEvents = dayEvents)
+        WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5, dayEvents = dayEvents)
         Spacer(modifier = Modifier.height(64.dp))
     }
 }

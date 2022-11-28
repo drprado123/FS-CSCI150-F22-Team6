@@ -78,6 +78,7 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     onPrevMonthButtonClicked = {
                         viewModel.prevMonthButton()
                     },
+                    dayEvents = {mn, day, yr -> viewModel.eventsByDay(mn,day,yr)},
                     m = uiState.mnNum,
                     y = uiState.yrNum
                 )

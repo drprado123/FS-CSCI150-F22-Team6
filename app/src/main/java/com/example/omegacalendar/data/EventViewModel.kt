@@ -26,6 +26,9 @@ class EventViewModel(
     fun getEventsByMonth(month: Int): LiveData<List<Event>> {
         return dao.getMonths(month)
     }
+    fun eventsByDay(m: Int, d:Int, y:Int): LiveData<List<Event>> {
+        return dao.getEventsByDay(m, d, y)
+    }
     fun insertEvent(event: Event)=viewModelScope.launch{
         dao.insertEvent(event)
     }
