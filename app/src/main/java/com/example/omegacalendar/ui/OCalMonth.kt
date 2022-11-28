@@ -21,10 +21,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.omegacalendar.AddEventActivity
 import com.example.omegacalendar.MainActivity
+import com.example.omegacalendar.ODay
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.MonthUiState
@@ -32,10 +34,13 @@ import com.example.omegacalendar.data.MonthUiState
 @Composable
 fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier, viewModel: EventViewModel){
     val events = viewModel.events.observeAsState(listOf()).value
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxHeight()
-            .clickable(onClick = {})
+            .clickable(onClick = {
+                context.startActivity(Intent(context, ODay::class.java))
+            })
             .padding(2.dp)
             .border(
                 width = 2.dp,

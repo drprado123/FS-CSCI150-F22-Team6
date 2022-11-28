@@ -1,4 +1,53 @@
 <resources>
     <string name="app_name">OmegaCalendar</string>
     <string name="back_button">Back</string>
+
+    // This Part is Pre Populated Events
+    <string name="Event1">The day the code hopefully works</string>
+    <string name="Event2">Leons coming over to speak with my mother</string>
+    <string name="Event3">Today is the day we go visit the Dentist</string>
+    <string name="Event4">Wake the fuck up sumarai, we got a project to build</string>
+    <string name="Event5">Pokemain Stream</string>
+    <string name="Event6">Annual Hating Trees Event</string>
+    <string name="Event7">Pokemon Go new Public Event</string>
+    <string name="Event8">FBS 153 Exam</string>
+    <string name="Event9">League of Legends with the bois</string>
+    <string name="Event10">CSCI 150 Lectures</string>
+    <string name="Event11">CSCI 150 Lab</string>
+
+    // This Part is Pre Populated Times
+
+    <string name="Time1">11:00</string>
+    <string name="Time2">3:00</string>
+    <string name="Time3">7:30</string>
+    <string name="Time4">10:30</string>
+    <string name="Time5">1:45</string>
+    <string name="Time6">5:00</string>
+    <string name="Time7">7:50</string>
+    <string name="Time8">3:00</string>
+    <string name="Time9">3:15</string>
+    <string name="Time10">2:00</string>
+    <string name="Time11">5:00</string>
+
+    // This part is the PM or AM
+
+    <string name="AM"> AM</string>
+    <string name="PM"> PM</string>
+
+
+    // This Part is Pre Populated Days
+    <string name="Sun">Sunday</string>
+    <string name="Mon">Monday</string>
+    <string name="Tue">Tuesday</string>
+    <string name="Wed">Wednesday</string>
+    <string name="Thu">Thursday</string>
+    <string name="Fri">Friday</string>
+    <string name="Sat">Saturday</string>
+
+
+    // This Part is Pre Pupulated Years
+    <string name="Year1">2023</string>
+    <string name="Year2">2022</string>
+    <string name="title_activity_oday">ODay</string>
+
 </resources>
