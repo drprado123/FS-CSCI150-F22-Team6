@@ -6,8 +6,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -16,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.MonthUiState
 
 @Composable
@@ -24,9 +29,10 @@ fun DayComponent(
     month:Int ,
     year:Int,
     modifier: Modifier = Modifier,
-    dayEvents:(mn:Int,day:Int,yr:Int) -> Unit,
+    dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
     weekNum: Int
 ){
+    val events = dayEvents(month, day, year)
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -56,6 +62,7 @@ fun DayComponent(
             }
 
         )
+        EventList(events)
         //Spacer(modifier = Modifier.height(4.dp))
         //Text(
         //    text = "month: $month \n year: $year",//"- " + "example text",
@@ -68,12 +75,29 @@ fun DayComponent(
         //)
     }
 }
+@Composable
+fun EventListItem(event: Event){
+    Row{
+        Column{
+            Text(text = event.desc)
+        }
+    }
+}
+@Composable
+fun EventList(events: List<Event>){
+    LazyColumn() {
+        items(events) { event ->
+            EventListItem(event)
+            Divider()
+        }
+    }
+}
 
 @Composable
 fun WeekComponent(
     modifier: Modifier = Modifier,
     month: OMonth,
-    dayEvents:(mn:Int,day:Int,yr:Int) -> Unit,
+    dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
     weekNum:Int
 ){
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
@@ -93,7 +117,7 @@ fun WeekComponent(
 fun MonthComponent(
     onPrevMonthButtonClicked:() -> Unit,
     onNextMonthButtonClicked:() -> Unit,
-    dayEvents:(mn:Int,day:Int,yr:Int) -> Unit,
+    dayEvents:(mn:Int,day:Int,yr:Int) -> LiveData<List<Event>>,
     m:Int,
     y:Int
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){

@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.omegacalendar.ui.MonthComponent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.omegacalendar.data.AppDatabase
+import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModelFactory
 
 enum class OCalScreen(){
@@ -53,6 +54,9 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Get current back stack entry
 
     // TODO: Get the name of the current screen
+
+    val event = Event(0,2022, 11,5,"bruh", 5, 10 )
+    viewModel.insertEvent(event)
 
     Scaffold(
         topBar = {
