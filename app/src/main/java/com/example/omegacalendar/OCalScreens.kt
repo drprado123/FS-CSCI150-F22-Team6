@@ -47,6 +47,16 @@ fun OmegaAppBar(
         }
     )
 }
+//@Composable
+//fun OmegaAppBottomBar(
+//    canNavigateBack: Boolean,
+//    navigateUp: () -> Unit,
+//    modifier: Modifier = Modifier
+//) {
+//    BottomAppBar(
+//
+//    )
+//}
 @Composable
 fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Create NavController

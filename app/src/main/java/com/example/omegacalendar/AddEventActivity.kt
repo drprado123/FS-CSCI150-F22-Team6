@@ -22,7 +22,7 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var viewModel : EventViewModel
     //private lateinit var viewModel2 : EventViewModel
     private lateinit var eventRecyclerView: RecyclerView
-   //rivate lateinit var eventRecyclerView2: RecyclerView
+   //private lateinit var eventRecyclerView2: RecyclerView
     private lateinit var adapter1: EventRecyclerViewAdapter
     //private lateinit var adapter2: EventRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
