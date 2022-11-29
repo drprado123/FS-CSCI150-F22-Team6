@@ -53,16 +53,16 @@ fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier, v
                 .align(alignment = Alignment.Start)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "month: $month \n year: $year",//"- " + "example text",
-
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp, top = 4.dp)
-                .background(color = Color(238, 130, 238)),
-            fontSize = 8.sp
-        )
-        EventList(events, viewModel)
+        //Text(
+        //    text = "month: $month \n year: $year",//"- " + "example text",
+//
+        //    modifier = Modifier
+        //        .fillMaxWidth()
+        //        .padding(start = 8.dp, top = 4.dp)
+        //        .background(color = Color(238, 130, 238)),
+        //    fontSize = 8.sp
+        //)
+        EventList(events)
 
     }
 }
@@ -70,12 +70,17 @@ fun DayComponent(day: Int, month:Int ,year:Int, modifier: Modifier = Modifier, v
 fun EventListItem(event: Event){
     Row{
         Column{
-            Text(text = event.desc)
+            Text(
+                text = event.desc,
+                fontSize = 8.sp,
+                modifier = Modifier
+                    .padding(start = 2.dp)
+            )
         }
     }
 }
 @Composable
-fun EventList(events: List<Event>, viewModel: EventViewModel){
+fun EventList(events: List<Event>){
     LazyColumn() {
         items(events) { event ->
             EventListItem(event)
