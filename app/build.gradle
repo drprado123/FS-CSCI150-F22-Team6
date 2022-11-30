@@ -49,10 +49,10 @@ android {
 }
 ext{
     roomVersion = "2.4.3"
-    lifecycleVersion = "2.6.0-alpha03"
+    lifecycleVersion = "2.5.1"
 }
 dependencies {
-
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'

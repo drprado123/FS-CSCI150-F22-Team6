@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -46,6 +47,16 @@ fun OmegaAppBar(
         }
     )
 }
+//@Composable
+//fun OmegaAppBottomBar(
+//    canNavigateBack: Boolean,
+//    navigateUp: () -> Unit,
+//    modifier: Modifier = Modifier
+//) {
+//    BottomAppBar(
+//
+//    )
+//}
 @Composable
 fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Create NavController
@@ -78,7 +89,7 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     onPrevMonthButtonClicked = {
                         viewModel.prevMonthButton()
                     },
-                    dayEvents = {mn, day, yr -> viewModel.eventsByDay(mn,day,yr)},
+                    viewModel = viewModel,
                     m = uiState.mnNum,
                     y = uiState.yrNum
                 )
