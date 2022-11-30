@@ -92,7 +92,8 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     },
                     viewModel = viewModel,
                     m = uiState.mnNum,
-                    y = uiState.yrNum
+                    y = uiState.yrNum,
+                    navController = navController
                 )
             }
             composable(route = OCalScreen.Day.name) {

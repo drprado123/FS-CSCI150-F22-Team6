@@ -35,8 +35,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.omegacalendar.AddEventActivity
 import com.example.omegacalendar.MainActivity
+import com.example.omegacalendar.OCalScreen
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.MonthUiState
@@ -48,17 +50,16 @@ fun DayComponent(
     year:Int,
     weekNum: Int,
     modifier: Modifier = Modifier,
-    viewModel: EventViewModel
+    viewModel: EventViewModel,
+    navController: NavController
 ){
     val events = viewModel.eventsByDay(month, day, year).observeAsState(listOf()).value
-//    val context = LocalContext.current
 
     Column(
         modifier = modifier
             .fillMaxHeight()
             .clickable(onClick = {
-//                context.startActivity(Intent(context, OCalDay::class.java))
-//                navController.navigate()
+                navController.navigate(OCalScreen.Day.name)
             })
             .padding(2.dp)
             .border(
@@ -125,20 +126,20 @@ fun WeekComponent(
     modifier: Modifier = Modifier,
     month: OMonth,
     weekNum:Int,
-    viewModel: EventViewModel
+    viewModel: EventViewModel,
+    navController: NavController
 ){
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
     Row(modifier = modifier){
-        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), weekNum, Modifier.weight(1f), viewModel)
-        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), weekNum, Modifier.weight(1f), viewModel)
-        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), weekNum, Modifier.weight(1f), viewModel)
-        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), weekNum, Modifier.weight(1f), viewModel)
-        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), weekNum, Modifier.weight(1f), viewModel)
-        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), weekNum, Modifier.weight(1f), viewModel)
-        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), weekNum, Modifier.weight(1f), viewModel)
+        DayComponent(weekList[0],month.getMonth(weekNum, weekList[0]) + 1, month.getYear(weekNum, weekList[0]), weekNum, Modifier.weight(1f), viewModel, navController)
+        DayComponent(weekList[1],month.getMonth(weekNum, weekList[1]) + 1, month.getYear(weekNum, weekList[1]), weekNum, Modifier.weight(1f), viewModel, navController)
+        DayComponent(weekList[2],month.getMonth(weekNum, weekList[2]) + 1, month.getYear(weekNum, weekList[2]), weekNum, Modifier.weight(1f), viewModel, navController)
+        DayComponent(weekList[3],month.getMonth(weekNum, weekList[3]) + 1, month.getYear(weekNum, weekList[3]), weekNum, Modifier.weight(1f), viewModel, navController)
+        DayComponent(weekList[4],month.getMonth(weekNum, weekList[4]) + 1, month.getYear(weekNum, weekList[4]), weekNum, Modifier.weight(1f), viewModel, navController)
+        DayComponent(weekList[5],month.getMonth(weekNum, weekList[5]) + 1, month.getYear(weekNum, weekList[5]), weekNum, Modifier.weight(1f), viewModel, navController)
+        DayComponent(weekList[6],month.getMonth(weekNum, weekList[6]) + 1, month.getYear(weekNum, weekList[6]), weekNum, Modifier.weight(1f), viewModel, navController)
     }
 }
-
 
 @Composable
 fun MonthComponent(
@@ -146,7 +147,8 @@ fun MonthComponent(
     onNextMonthButtonClicked:() -> Unit,
     viewModel: EventViewModel,
     m:Int,
-    y:Int
+    y:Int,
+    navController: NavController
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
     //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
     //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
@@ -225,12 +227,12 @@ fun MonthComponent(
             Spacer(modifier = Modifier.height(12.dp))
 
             //column of weeks
-            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0, viewModel)
-            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1, viewModel)
-            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2, viewModel)
-            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3, viewModel)
-            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4, viewModel)
-            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5, viewModel)
+            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 0, viewModel, navController)
+            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 1, viewModel, navController)
+            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 2, viewModel, navController)
+            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 3, viewModel, navController)
+            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 4, viewModel, navController)
+            WeekComponent(modifier = Modifier.weight(1f), month = mn, weekNum = 5, viewModel, navController)
             Spacer(modifier = Modifier.height(64.dp))
         }
 
