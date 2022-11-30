@@ -10,14 +10,17 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.omegacalendar.data.Datasource
 import com.example.omegacalendar.model.Day
 import com.example.omegacalendar.model.Events
+import com.example.omegacalendar.ui.OMonth
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 
 class ODay : ComponentActivity() {
@@ -30,25 +33,31 @@ class ODay : ComponentActivity() {
     }
 }
 
-@Composable
+@Composable     // This is just called upon to get the whole display. Imagine it as the program
 fun DailyScreen() {
     OmegaCalendarTheme() {
-        DailySlide(EventList = Datasource().loadAffirmations())
+        DailySlide(
+            EventList = Datasource().loadAffirmations(),
+            Y = 0,
+            M = 1,
+            D = 5,
+        )
     }
 }
 
 
-@Composable     // THIS IS ALL THE DISPLAY AREA
-fun DailySlide(EventList: List<Events>, modifier: Modifier = Modifier) {
+@Composable     // This is where it grabs the things to display. Such as the list along with the buttons
+fun DailySlide(EventList: List<Events>, modifier: Modifier = Modifier, Y: Int, M: Int, D: Int) {
 
-    Column() {
+    Column(
+        modifier = Modifier
+            .wrapContentWidth()
+    ) {
+        Navigations(Y, M)
 
-
-
-        LazyColumn(
-            modifier = Modifier
-                .weight(8/12f), )
-        {
+        LazyColumn(modifier = Modifier
+            .weight(10/12f)
+        ) {
             items(EventList) { Evento ->
                 EventSlide(Evento)
             }
@@ -57,7 +66,54 @@ fun DailySlide(EventList: List<Events>, modifier: Modifier = Modifier) {
 
 }
 
-@Composable
+@Composable     // This all focuses on the Top Column, Buttons Year and Month Display
+fun Navigations(Y:Int, M:Int) {
+
+
+    var y = Y
+    var m = M
+//    var d = D
+
+    val monthname = OMonth(m, y)
+
+
+
+    Box(modifier = Modifier.fillMaxWidth()){
+        Row(modifier = Modifier.align(Alignment.Center)) {
+
+            Text(
+                text = monthname.monthName,     // Month
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(horizontal = 12.dp),
+                fontSize = 32.sp
+            )
+
+            Text (
+                text = monthname.monthName,       // Day
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(horizontal = 12.dp),
+                fontSize = 32.sp
+            )
+
+            Text(
+                text = "Year",      // Year
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(horizontal = 12.dp),
+                fontSize = 32.sp
+            )
+
+        }
+
+
+    }
+
+}
+
+
+@Composable         // This all focuses on the Bottom Column, The lazy Column Slide/ Event Displays
 fun EventSlide (Evento: Events, modifier: Modifier = Modifier) {
     Card(modifier = Modifier.padding(8.dp), elevation = 4.dp) {
         Row {
@@ -94,8 +150,11 @@ fun EventSlide (Evento: Events, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+
+@Preview (showBackground = true)
 @Composable
-private fun DailyScreenPreview() {
-    EventSlide (Events(R.string.Event1, R.string.Time1, R.string.Mon, R.string.AM))
+fun DailyScreenPreview() {
+
+    DailyScreen()
+
 }
