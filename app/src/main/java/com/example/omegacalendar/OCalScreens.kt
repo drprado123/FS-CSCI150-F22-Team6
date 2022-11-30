@@ -21,6 +21,7 @@ import com.example.omegacalendar.ui.MonthComponent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModelFactory
+import com.example.omegacalendar.ui.DailyScreen
 
 enum class OCalScreen(){
     Month,
@@ -93,6 +94,9 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     m = uiState.mnNum,
                     y = uiState.yrNum
                 )
+            }
+            composable(route = OCalScreen.Day.name) {
+                DailyScreen()
             }
             //composable(route = CupcakeScreen.Flavor.name) {
             //    val context = LocalContext.current
