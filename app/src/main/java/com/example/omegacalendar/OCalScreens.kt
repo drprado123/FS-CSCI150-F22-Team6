@@ -25,8 +25,11 @@ import com.example.omegacalendar.ui.DailyScreen
 
 enum class OCalScreen(){
     Month,
-    Day
+    Day,
 }
+
+var DayTemp:Int=0
+
 @Composable
 fun OmegaAppBar(
     canNavigateBack: Boolean,
@@ -97,7 +100,14 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                 )
             }
             composable(route = OCalScreen.Day.name) {
-                DailyScreen()
+                DailyScreen(
+//                    day = OCalScreen.Day.name,
+                    day = DayTemp,
+                    month = uiState.mnNum,
+                    year = uiState.yrNum,
+                    modifier = Modifier,
+                    viewModel = viewModel
+                )
             }
             //composable(route = CupcakeScreen.Flavor.name) {
             //    val context = LocalContext.current

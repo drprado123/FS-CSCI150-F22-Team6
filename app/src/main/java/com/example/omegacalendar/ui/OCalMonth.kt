@@ -36,9 +36,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.omegacalendar.AddEventActivity
-import com.example.omegacalendar.MainActivity
-import com.example.omegacalendar.OCalScreen
+import com.example.omegacalendar.*
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.MonthUiState
@@ -59,6 +57,7 @@ fun DayComponent(
         modifier = modifier
             .fillMaxHeight()
             .clickable(onClick = {
+                DayTemp=day
                 navController.navigate(OCalScreen.Day.name)
             })
             .padding(2.dp)
