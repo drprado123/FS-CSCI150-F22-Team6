@@ -17,6 +17,10 @@ import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.EventViewModelFactory
 import com.example.omegacalendar.ui.MonthComponent
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 //import com.example.omegacalendar.data.Event
 //import androidx.room.Database
 //import androidx.room.Room
@@ -24,6 +28,7 @@ import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
+
     private lateinit var viewModel : EventViewModel
     init {
         instance = this
@@ -38,6 +43,7 @@ class MainActivity : ComponentActivity() {
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        networkrequest("hello")
         val context: Context = MainActivity.applicationContext()
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
@@ -65,4 +71,26 @@ fun DefaultPreview() {
     OmegaCalendarTheme {
 
     }
+}
+
+fun networkrequest(info: String){ //this is the network request function it has to exist here in the main or it wont function
+    val imageloc = "https://assets.stickpng.com/images/587185d57b7f6103e35c6cc7.png"
+    val requestModel = RequestModel("OmegaCalendarBot", info,imageloc)
+
+    val response = ServiceBuilder.buildService(ApiInterface::class.java)
+    response.sendReq(requestModel).enqueue(
+        object : Callback<ResponseModel> {
+            override fun onResponse(
+                call: Call<ResponseModel>,
+                response: Response<ResponseModel>
+            ) {
+                return
+            }
+
+            override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+                return
+            }
+
+        }
+    )
 }
