@@ -19,8 +19,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.omegacalendar.ui.MonthComponent
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModelFactory
+import com.example.omegacalendar.ui.ShowMonth
 
 enum class OCalScreen(){
     Month,
@@ -47,29 +51,22 @@ fun OmegaAppBar(
         }
     )
 }
-//@Composable
-//fun OmegaAppBottomBar(
-//    canNavigateBack: Boolean,
-//    navigateUp: () -> Unit,
-//    modifier: Modifier = Modifier
-//) {
-//    BottomAppBar(
-//
-//    )
-//}
+
 @Composable
 fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Create NavController
     val navController = rememberNavController()
     // TODO: Get current back stack entry
+    //val backStackEntry by navController.currentBackStackEntryAsState()
 
     // TODO: Get the name of the current screen
+    //val currentScreen = backStackEntry?.destination?.route ?: "month"
 
     Scaffold(
         topBar = {
             OmegaAppBar(
-                canNavigateBack = false,
-                navigateUp = { /* TODO: implement back navigation */ }
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() }
             )
         }
     ) { innerPadding ->
@@ -78,10 +75,10 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
         // TODO: add NavHost
         NavHost(
             navController = navController,
-            startDestination = OCalScreen.Month.name,
+            startDestination = "month",//OCalScreen.Month.name,
             modifier = modifier.padding(innerPadding)
         ) {
-            composable(route = OCalScreen.Month.name) {
+            composable(route = "month") {
                 MonthComponent(
                     onNextMonthButtonClicked = {
                         viewModel.nextMonthButton()
@@ -89,10 +86,29 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     onPrevMonthButtonClicked = {
                         viewModel.prevMonthButton()
                     },
+                    onDayClicked = {
+                        navController.navigate("day")
+                    },
                     viewModel = viewModel,
                     m = uiState.mnNum,
                     y = uiState.yrNum
                 )
+            }
+
+            //day screen goes here
+            composable(route = "day",
+                //arguments = listOf(
+                //    navArgument("month") {type = NavType.IntType},
+                //    navArgument("day") {type = NavType.IntType},
+                //    navArgument("year") {type = NavType.IntType}
+                //)
+            ) { //backStackEntry ->
+//
+                //val m = backStackEntry.arguments?.getInt("month") ?: 0
+                //val d = backStackEntry.arguments?.getInt("day") ?: 0
+                //val y = backStackEntry.arguments?.getInt("year") ?: 0
+//
+                //ShowMonth(month = m, day = d, year = y)
             }
             //composable(route = CupcakeScreen.Flavor.name) {
             //    val context = LocalContext.current

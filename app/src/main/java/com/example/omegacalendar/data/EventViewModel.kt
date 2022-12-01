@@ -70,4 +70,11 @@ class EventViewModel(
             )
         }
     }
+    fun changeYear(yr:Int){
+        _uiState.update { currentState ->
+            currentState.copy(
+                yrNum = yr
+            )
+        }
+    }
 }
