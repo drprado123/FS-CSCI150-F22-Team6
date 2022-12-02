@@ -33,7 +33,7 @@ interface EventDao {
     fun getMonths(mon: Int): LiveData<List<Event>>
     @Query ("SELECT * FROM events_table where event_month = :mon AND event_day = :day AND event_year = :year")
     fun getEventsByDay(mon: Int, day: Int, year: Int):LiveData<List<Event>>
-    @Query ("SELECT * FROM events_table where event_month = :mon AND event_day = :day AND event_year = :year ORDER BY event_start_hour DESC")
+    @Query ("SELECT * FROM events_table where event_month = :mon AND event_day = :day AND event_year = :year ORDER BY event_start_hour ASC")
     fun getEventsByDayOrdered(mon: Int, day: Int, year: Int):LiveData<List<Event>>
 
 

@@ -3,6 +3,7 @@ package com.example.omegacalendar.ui
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,21 +33,37 @@ fun DailyScreen(
     modifier: Modifier = Modifier,
     viewModel: EventViewModel,
 ){
-    val events = viewModel.eventsByDay(month + 1, day, year).observeAsState(listOf()).value
-
+    val events = viewModel.getEventsByDayOrdered(month + 1, day, year).observeAsState(listOf()).value
+    val monthName = when (month) {
+        0 -> "Jan"
+        1 -> "Feb"
+        2 -> "Mar"
+        3 -> "Apr"
+        4 -> "May"
+        5 -> "Jun"
+        6 -> "July"
+        7 -> "Aug"
+        8 -> "Sept"
+        9 -> "Oct"
+        10 -> "Nov"
+        11 -> "Dec"
+        else -> "Invalid month"
+    }
     Column(modifier = Modifier.wrapContentWidth()){
         Text(
 
-            text = month.toString() + " " + day.toString() + " " + year.toString(),
+            text = monthName + " " + day.toString() + ", " + year.toString(),
+
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .weight(1 / 16f),
+                .padding(16.dp),
+//                .fillMaxWidth()
+//                .weight(1 / 16f),
             style = MaterialTheme.typography.h3
             )
         DayEventList(events)
     }
 }
+
 
 @Composable
 fun DayEventListItem(event: Event){
