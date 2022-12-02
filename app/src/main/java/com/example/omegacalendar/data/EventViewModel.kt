@@ -38,6 +38,9 @@ class EventViewModel(
     fun updateEvent(event: Event)=viewModelScope.launch{
         dao.updateEvent(event)
     }
+    fun getEventsByDayOrdered(mon: Int, day: Int, year: Int): LiveData<List<Event>>{
+        return dao.getEventsByDayOrdered(mon,day,year)
+    }
     fun prevMonthButton(){
         var m = _uiState.value.mnNum
         var y = _uiState.value.yrNum

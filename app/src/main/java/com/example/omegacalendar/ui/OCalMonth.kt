@@ -25,12 +25,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.omegacalendar.AddEventActivity
-import com.example.omegacalendar.MainActivity
+import androidx.navigation.NavController
+import com.example.omegacalendar.*
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
 
@@ -148,7 +152,6 @@ fun WeekComponent(
     }
 }
 
-
 @Composable
 fun MonthComponent(
     onPrevMonthButtonClicked:() -> Unit,
@@ -156,7 +159,8 @@ fun MonthComponent(
     viewModel: EventViewModel,
     onDayClicked:(Int,Int,Int) -> Unit,
     m:Int,
-    y:Int
+    y:Int,
+    navController: NavController
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
     //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
     //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }

@@ -25,11 +25,16 @@ import androidx.navigation.navArgument
 import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModelFactory
 import com.example.omegacalendar.ui.ShowMonth
+import androidx.navigation.navArgument
+import com.example.omegacalendar.ui.DailyScreen
 
 enum class OCalScreen(){
     Month,
-    Day
+    Day,
 }
+
+var DayTemp:Int=0
+
 @Composable
 fun OmegaAppBar(
     currentScreen: String,
@@ -94,11 +99,20 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     },
                     viewModel = viewModel,
                     m = uiState.mnNum,
-                    y = uiState.yrNum
+                    y = uiState.yrNum,
+                    navController = navController
                 )
             }
-
-            //day screen goes here
+//            composable(route = OCalScreen.Day.name) {
+//                DailyScreen(
+////                    day = OCalScreen.Day.name,
+//                    day = DayTemp,
+//                    month = uiState.mnNum,
+//                    year = uiState.yrNum,
+//                    modifier = Modifier,
+//                    viewModel = viewModel
+//                )
+//            }
             composable(route = "day/{monthNum}/{dayNum}/{yearNum}",//?monthNum={monthNum},dayNum={dayNum},yearNum={yearNum}",
                 arguments = listOf(
                     navArgument("monthNum") {type = NavType.IntType},
@@ -111,8 +125,18 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                 val d = backStackEntry.arguments?.getInt("dayNum") ?: 0
                 val y = backStackEntry.arguments?.getInt("yearNum") ?: 0
 
-                ShowMonth(month = m, day = d, year = y)
+                DailyScreen(
+//                    day = OCalScreen.Day.name,
+                    day = d,
+                    month = m,
+                    year = y,
+                    modifier = Modifier,
+                    viewModel = viewModel
+                )
+
+                //ShowMonth(month = m, day = d, year = y)
             }
+
             //composable(route = CupcakeScreen.Flavor.name) {
             //    val context = LocalContext.current
             //    SelectOptionScreen(
