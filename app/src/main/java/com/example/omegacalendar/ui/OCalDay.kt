@@ -37,6 +37,7 @@ import com.example.omegacalendar.MainActivity
 import com.example.omegacalendar.OCalScreen
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
+import com.example.omegacalendar.ui.NetworkStuffs.networkrequest
 import com.example.omegacalendar.ui.theme.darkGrey
 import com.example.omegacalendar.ui.theme.tealBackground
 import com.example.omegacalendar.ui.theme.tealSecondary
@@ -140,7 +141,7 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
-                            // PUT CODE FOR DISCORD BOT HERE!!
+                            networkrequest(event)
                             openDialog.value = false
                         }
                     ) {
