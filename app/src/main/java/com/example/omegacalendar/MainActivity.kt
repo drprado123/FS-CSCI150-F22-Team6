@@ -24,6 +24,7 @@ import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
+    networkrequest("hello this is a main test")
     private lateinit var viewModel : EventViewModel
     init {
         instance = this
@@ -65,8 +66,6 @@ fun DefaultPreview() {
     OmegaCalendarTheme {
 
     }
-<<<<<<< Updated upstream
-=======
 }
 
 fun networkrequest(info: String){ //this is the network request function it has to exist here in the main or it wont function
@@ -90,5 +89,4 @@ fun networkrequest(info: String){ //this is the network request function it has 
 
         }
     )
->>>>>>> Stashed changes
 }
