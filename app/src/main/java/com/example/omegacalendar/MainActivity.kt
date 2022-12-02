@@ -16,6 +16,7 @@ import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.EventViewModelFactory
 import com.example.omegacalendar.ui.MonthComponent
+import com.example.omegacalendar.ui.NetworkStuffs.networkrequest
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.Event
 //import androidx.room.Database
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        networkrequest("Hello This is from our current main I hope it works!")
         val context: Context = MainActivity.applicationContext()
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
