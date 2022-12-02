@@ -39,7 +39,6 @@ class MainActivity : ComponentActivity() {
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
-        networkrequest("Hello This is from our current main I hope it works!")
         val context: Context = MainActivity.applicationContext()
         val dao = AppDatabase.getInstance(application).eventDao()
         //factory used to instantiate and pass dao to view model
