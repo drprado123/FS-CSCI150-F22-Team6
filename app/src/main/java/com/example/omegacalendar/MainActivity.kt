@@ -24,7 +24,6 @@ import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
-    networkrequest("hello this is a main test")
     private lateinit var viewModel : EventViewModel
     init {
         instance = this
@@ -60,11 +59,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    OmegaCalendarTheme {
-
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    OmegaCalendarTheme {
+//
+//    }
+//}
 
