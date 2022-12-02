@@ -58,7 +58,7 @@ fun DayComponent(
             .fillMaxHeight()
             .clickable(onClick = {
                 DayTemp=day
-                navController.navigate(OCalScreen.Day.name)
+                navController.navigate("day/$month/$day/$year")//OCalScreen.Day.name)
             })
             .padding(2.dp)
             .border(

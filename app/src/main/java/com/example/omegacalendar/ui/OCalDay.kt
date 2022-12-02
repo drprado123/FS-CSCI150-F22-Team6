@@ -33,8 +33,8 @@ fun DailyScreen(
     modifier: Modifier = Modifier,
     viewModel: EventViewModel,
 ){
-    val events = viewModel.getEventsByDayOrdered(month + 1, day, year).observeAsState(listOf()).value
-    val monthName = when (month) {
+    val events = viewModel.getEventsByDayOrdered(month, day, year).observeAsState(listOf()).value
+    val monthName = when (month-1) {
         0 -> "Jan"
         1 -> "Feb"
         2 -> "Mar"

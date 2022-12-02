@@ -19,6 +19,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.omegacalendar.ui.MonthComponent
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModelFactory
 import com.example.omegacalendar.ui.DailyScreen
@@ -82,10 +84,10 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
         // TODO: add NavHost
         NavHost(
             navController = navController,
-            startDestination = OCalScreen.Month.name,
+            startDestination = "month",//OCalScreen.Month.name,
             modifier = modifier.padding(innerPadding)
         ) {
-            composable(route = OCalScreen.Month.name) {
+            composable(route = "month"){//OCalScreen.Month.name) {
                 MonthComponent(
                     onNextMonthButtonClicked = {
                         viewModel.nextMonthButton()
@@ -99,16 +101,40 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     navController = navController
                 )
             }
-            composable(route = OCalScreen.Day.name) {
+//            composable(route = OCalScreen.Day.name) {
+//                DailyScreen(
+////                    day = OCalScreen.Day.name,
+//                    day = DayTemp,
+//                    month = uiState.mnNum,
+//                    year = uiState.yrNum,
+//                    modifier = Modifier,
+//                    viewModel = viewModel
+//                )
+//            }
+            composable(route = "day/{monthNum}/{dayNum}/{yearNum}",//?monthNum={monthNum},dayNum={dayNum},yearNum={yearNum}",
+                arguments = listOf(
+                    navArgument("monthNum") {type = NavType.IntType},
+                    navArgument("dayNum") {type = NavType.IntType},
+                    navArgument("yearNum") {type = NavType.IntType}
+                )
+            ) { backStackEntry ->
+
+                val m = backStackEntry.arguments?.getInt("monthNum") ?: 0
+                val d = backStackEntry.arguments?.getInt("dayNum") ?: 0
+                val y = backStackEntry.arguments?.getInt("yearNum") ?: 0
+
                 DailyScreen(
 //                    day = OCalScreen.Day.name,
-                    day = DayTemp,
-                    month = uiState.mnNum,
-                    year = uiState.yrNum,
+                    day = d,
+                    month = m,
+                    year = y,
                     modifier = Modifier,
                     viewModel = viewModel
                 )
+
+                //ShowMonth(month = m, day = d, year = y)
             }
+
             //composable(route = CupcakeScreen.Flavor.name) {
             //    val context = LocalContext.current
             //    SelectOptionScreen(
