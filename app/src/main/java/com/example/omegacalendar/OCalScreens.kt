@@ -32,12 +32,14 @@ enum class OCalScreen(){
 }
 @Composable
 fun OmegaAppBar(
+    currentScreen: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(stringResource(id = R.string.app_name)) },
+        title = { Text(stringResource(id = R.string.app_name)
+        ) },
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
@@ -57,14 +59,15 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
     // TODO: Create NavController
     val navController = rememberNavController()
     // TODO: Get current back stack entry
-    //val backStackEntry by navController.currentBackStackEntryAsState()
+    val backStackEntry by navController.currentBackStackEntryAsState()
 
     // TODO: Get the name of the current screen
-    //val currentScreen = backStackEntry?.destination?.route ?: "month"
+    val currentScreen = backStackEntry?.destination?.route ?: "month"
 
     Scaffold(
         topBar = {
             OmegaAppBar(
+                currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
             )
@@ -86,8 +89,8 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                     onPrevMonthButtonClicked = {
                         viewModel.prevMonthButton()
                     },
-                    onDayClicked = {
-                        navController.navigate("day")
+                    onDayClicked = {monthNum, dayNum, yearNum ->
+                        navController.navigate("day/$monthNum/$dayNum/$yearNum")//?monthNum={monthNum},dayNum={dayNum},yearNum={yearNum}")
                     },
                     viewModel = viewModel,
                     m = uiState.mnNum,
@@ -96,19 +99,19 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
             }
 
             //day screen goes here
-            composable(route = "day",
-                //arguments = listOf(
-                //    navArgument("month") {type = NavType.IntType},
-                //    navArgument("day") {type = NavType.IntType},
-                //    navArgument("year") {type = NavType.IntType}
-                //)
-            ) { //backStackEntry ->
-//
-                //val m = backStackEntry.arguments?.getInt("month") ?: 0
-                //val d = backStackEntry.arguments?.getInt("day") ?: 0
-                //val y = backStackEntry.arguments?.getInt("year") ?: 0
-//
-                //ShowMonth(month = m, day = d, year = y)
+            composable(route = "day/{monthNum}/{dayNum}/{yearNum}",//?monthNum={monthNum},dayNum={dayNum},yearNum={yearNum}",
+                arguments = listOf(
+                    navArgument("monthNum") {type = NavType.IntType},
+                    navArgument("dayNum") {type = NavType.IntType},
+                    navArgument("yearNum") {type = NavType.IntType}
+                )
+            ) { backStackEntry ->
+
+                val m = backStackEntry.arguments?.getInt("monthNum") ?: 0
+                val d = backStackEntry.arguments?.getInt("dayNum") ?: 0
+                val y = backStackEntry.arguments?.getInt("yearNum") ?: 0
+
+                ShowMonth(month = m, day = d, year = y)
             }
             //composable(route = CupcakeScreen.Flavor.name) {
             //    val context = LocalContext.current

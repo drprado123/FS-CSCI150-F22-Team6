@@ -42,7 +42,7 @@ fun DayComponent(
     weekNum: Int,
     modifier: Modifier = Modifier,
     viewModel: EventViewModel,
-    onDayClicked:() -> Unit = {},
+    onDayClicked:(Int,Int,Int) -> Unit,
 ){
     //get list of events (List<Events>) from viewModel
     val events = viewModel.eventsByDay(month, day, year).observeAsState(listOf()).value
@@ -50,7 +50,7 @@ fun DayComponent(
     Column(
         modifier = modifier
             .fillMaxHeight()
-            .clickable(onClick = { onDayClicked() })
+            .clickable(onClick = { onDayClicked(month,day,year) })
             .padding(2.dp)
             .border(
                 width = 2.dp,
@@ -131,7 +131,7 @@ fun WeekComponent(
     month: OMonth,
     weekNum:Int,
     viewModel: EventViewModel,
-    onDayClicked:() -> Unit = {}
+    onDayClicked:(Int,Int,Int) -> Unit
 ){
     //get list of the numbers of the week
     val weekList = month.wholeMonth[weekNum]//list of the weekdays
@@ -154,7 +154,7 @@ fun MonthComponent(
     onPrevMonthButtonClicked:() -> Unit,
     onNextMonthButtonClicked:() -> Unit,
     viewModel: EventViewModel,
-    onDayClicked:() -> Unit = {},
+    onDayClicked:(Int,Int,Int) -> Unit,
     m:Int,
     y:Int
 ){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
