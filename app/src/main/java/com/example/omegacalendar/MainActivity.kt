@@ -24,6 +24,7 @@ import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
 //import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
+    networkrequest("hello this is a main test")
     private lateinit var viewModel : EventViewModel
     init {
         instance = this
@@ -66,3 +67,4 @@ fun DefaultPreview() {
 
     }
 }
+
