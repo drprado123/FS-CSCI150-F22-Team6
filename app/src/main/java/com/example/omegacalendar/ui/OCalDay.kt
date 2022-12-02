@@ -32,7 +32,7 @@ fun DailyScreen(
     modifier: Modifier = Modifier,
     viewModel: EventViewModel,
 ){
-    val events = viewModel.eventsByDay(12, day, year).observeAsState(listOf()).value
+    val events = viewModel.eventsByDay(month + 1, day, year).observeAsState(listOf()).value
 
     Column(modifier = Modifier.wrapContentWidth()){
         Text(
