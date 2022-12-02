@@ -32,17 +32,18 @@ fun DailyScreen(
     modifier: Modifier = Modifier,
     viewModel: EventViewModel,
 ){
-    val events = viewModel.eventsByDay(month, day, year).observeAsState(listOf()).value
+    val events = viewModel.eventsByDay(12, day, year).observeAsState(listOf()).value
 
     Column(modifier = Modifier.wrapContentWidth()){
         Text(
+
             text = month.toString() + " " + day.toString() + " " + year.toString(),
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                .weight(4 / 16f),
-            style = MaterialTheme.typography.h6
-        )
+                .weight(1 / 16f),
+            style = MaterialTheme.typography.h3
+            )
         DayEventList(events)
     }
 }
@@ -60,25 +61,31 @@ fun DayEventListItem(event: Event){
                         .weight(10 / 16f),
                     style = MaterialTheme.typography.h6
                 )
+                    Text(
+                        text = event.startHour.toString() + " - " + event.startMin.toString(),
+                        modifier = Modifier
+                            .weight(6 / 16f),
+                        style = MaterialTheme.typography.h6
+                )
 
 //                Text(
-//                    text = event.startMin.toString(),
-//                    modifier = Modifier,
-////                        .weight(2 / 16f),
+//                    text = event.startHour.toString() + ":" + event.startMin.toString(),
+//                    modifier = Modifier
+//                        .weight(6 / 16f),
 //                    style = MaterialTheme.typography.h6
 //                )
 //
 //                Text(
 //                    text = "-",
-//                    modifier = Modifier,
-////                        .weight(1/16f),
+//                    modifier = Modifier
+//                        .weight(1/16f),
 //                    style = MaterialTheme.typography.h6
 //                )
 //
 //                Text(
-//                    text = event.endMin.toString(),
-//                    modifier = Modifier,
-////                        .weight(2 / 16f),
+//                    text = event.endHour.toString()+ ":" + event.endMin.toString(),
+//                    modifier = Modifier
+//                        .weight(2 / 16f),
 //                    style = MaterialTheme.typography.h6
 //                )
 
