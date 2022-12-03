@@ -12,3 +12,8 @@ val tealPrimary = Color(200,255,244)
 val tealAlt = Color(188,224,253)
 val tealSecondary = Color(1,149,146)
 val tealBackground = Color(241,249,255)
+
+val dTealSecondary = Color(0,86,77)
+val dTealPrimary = Color(0,137,123)
+val dTealBackground = Color(40,40,40)
+val dTealAlt = Color(150,150,150)
