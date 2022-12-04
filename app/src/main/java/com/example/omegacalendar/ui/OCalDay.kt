@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -38,6 +39,7 @@ import com.example.omegacalendar.OCalScreen
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.ui.NetworkStuffs.networkrequest
+import com.example.omegacalendar.ui.theme.alertBackgroundColor
 import com.example.omegacalendar.ui.theme.darkGrey
 import com.example.omegacalendar.ui.theme.tealBackground
 import com.example.omegacalendar.ui.theme.tealSecondary
@@ -115,6 +117,7 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
 
     if (openDialog.value) {
         AlertDialog(
+            backgroundColor = alertBackgroundColor,
             onDismissRequest = {
                 // Dismiss the dialog when the user clicks outside the dialog or on the back
                 // button. If you want to disable that functionality, simply use an empty

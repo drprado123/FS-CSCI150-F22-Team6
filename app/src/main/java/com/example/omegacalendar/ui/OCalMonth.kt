@@ -37,6 +37,10 @@ import androidx.navigation.NavController
 import com.example.omegacalendar.*
 import com.example.omegacalendar.data.Event
 import com.example.omegacalendar.data.EventViewModel
+import com.example.omegacalendar.ui.theme.currentMonthDayColor
+import com.example.omegacalendar.ui.theme.monthEventColor
+import com.example.omegacalendar.ui.theme.monthEventTextColor
+import com.example.omegacalendar.ui.theme.nonCurrentMonthDayColor
 
 @Composable
 fun DayComponent(
@@ -71,29 +75,18 @@ fun DayComponent(
                 //.fillMaxWidth()
                 .align(alignment = Alignment.Start),
             color = if (weekNum == 0 && day in 21..31){
-                Color.LightGray
+                nonCurrentMonthDayColor
             }
             else if (weekNum in 4..5 && day in 1..14){
-                Color.LightGray
+                nonCurrentMonthDayColor
             }
             else{
-                Color.Black
+                currentMonthDayColor
             }
         )
         Spacer(modifier = Modifier.height(4.dp))
-        //Text(
-        //    text = "month: $month \n year: $year",//"- " + "example text",
-//
-        //    modifier = Modifier
-        //        .fillMaxWidth()
-        //        .padding(start = 8.dp, top = 4.dp)
-        //        .background(color = Color(238, 130, 238)),
-        //    fontSize = 8.sp
-        //)
 
-        //displays list of events
         EventList(events)
-
     }
 }
 
@@ -106,13 +99,14 @@ fun EventListItem(event: Event){
                 .padding(start = 2.dp, end = 2.dp),
                 //.background(color = Color(255,182,193)),
             border = BorderStroke(0.dp,Color.Transparent),
-            backgroundColor = Color(255, 182, 208, 255)
+            backgroundColor = monthEventColor
         ){
             Text(
                 modifier = Modifier
                     .padding(start = 2.dp),
                 text = event.desc,
                 fontSize = 6.sp,
+                color = monthEventTextColor
                 //style = TextStyle(background = Color(255,182,193))
 
             )

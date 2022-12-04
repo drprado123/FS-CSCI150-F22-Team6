@@ -57,7 +57,8 @@ class AddEventActivity : AppCompatActivity() {
         eventRecyclerView.layoutManager =  LinearLayoutManager(this)
         adapter1 = EventRecyclerViewAdapter()
         eventRecyclerView.adapter = adapter1
-        displayEventsList(viewModel,adapter1, 12)
+
+//        displayEventsList(viewModel,adapter1, 12)
 
         //eventRecyclerView2.layoutManager =  LinearLayoutManager(this)
         //adapter2 = EventRecyclerViewAdapter()
@@ -86,19 +87,19 @@ class AddEventActivity : AppCompatActivity() {
         endText.setText("")
 
     }
-    private fun initRecyclerView(rcView: RecyclerView, vModel: EventViewModel, mon: Int){ //still figuring this out
-        //eventRecyclerView.layoutManager = LinearLayoutManager(this)
-        rcView.layoutManager = LinearLayoutManager(this)
-        val adapter = EventRecyclerViewAdapter()
-        rcView.adapter = adapter
-
-        displayEventsList(vModel, adapter, mon)
-    }
-    private fun displayEventsList(vModel: EventViewModel, adapter: EventRecyclerViewAdapter, mon: Int){
-        // can set what events appear in the recycler view by calling the function or entire list
-        vModel.getEventsByMonth(mon).observe(this,{
-            adapter.setList(it)
-            adapter.notifyDataSetChanged()
-        })
-    }
+//    private fun initRecyclerView(rcView: RecyclerView, vModel: EventViewModel, mon: Int){ //still figuring this out
+//        //eventRecyclerView.layoutManager = LinearLayoutManager(this)
+//        rcView.layoutManager = LinearLayoutManager(this)
+//        val adapter = EventRecyclerViewAdapter()
+//        rcView.adapter = adapter
+//
+//        displayEventsList(vModel, adapter, mon)
+//    }
+//    private fun displayEventsList(vModel: EventViewModel, adapter: EventRecyclerViewAdapter, mon: Int){
+//        // can set what events appear in the recycler view by calling the function or entire list
+//        vModel.getEventsByMonth(mon).observe(this,{
+//            adapter.setList(it)
+//            adapter.notifyDataSetChanged()
+//        })
+//    }
 }

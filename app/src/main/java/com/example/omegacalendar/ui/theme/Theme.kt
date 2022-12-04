@@ -33,6 +33,12 @@ private val LightColorPalette = lightColors(
     */
 )
 
+var alertBackgroundColor = Color.White
+var nonCurrentMonthDayColor = Color.LightGray
+var currentMonthDayColor = Color.Black
+var monthEventTextColor = Color.DarkGray
+var monthEventColor = Color(255,204,203)
+
 @Composable
 fun OmegaCalendarTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -42,6 +48,21 @@ fun OmegaCalendarTheme(
         DarkColorPalette
     } else {
         LightColorPalette
+    }
+
+    if (darkTheme){
+        alertBackgroundColor = Color.DarkGray
+        nonCurrentMonthDayColor = Color(100,100,100)
+        currentMonthDayColor = Color.White
+        monthEventTextColor = Color.Black
+        monthEventColor = Color(200,50,0)
+
+    } else{
+        alertBackgroundColor = Color.White
+        nonCurrentMonthDayColor = Color.LightGray
+        currentMonthDayColor = Color.Black
+        monthEventTextColor = Color.DarkGray
+        monthEventColor = Color(255, 182, 182)
     }
 
     MaterialTheme(
