@@ -202,7 +202,7 @@ fun MonthComponent(
                 //}
 
                 //button to choose the year
-                yearButton(yr = y, modifier = Modifier.align(Alignment.CenterEnd))
+                yearButton(yr = y, modifier = Modifier.align(Alignment.CenterEnd),viewModel)
                 //Text(
                 //    text = y.toString(),
                 //    modifier = Modifier
@@ -271,7 +271,8 @@ fun MonthComponent(
 @Composable
 fun yearButton(
     yr:Int,
-    modifier: Modifier
+    modifier: Modifier,
+    viewModel: EventViewModel
 ){
     val openDialog = remember { mutableStateOf(false) }
     val textState = remember { mutableStateOf("") }
@@ -302,7 +303,15 @@ fun yearButton(
                         imeAction = ImeAction.Done //input method editor
                     ),
                     keyboardActions = KeyboardActions(
-                        onDone = { openDialog.value = false; textState.value = "" })
+                        onDone = {
+                            var iYear = textState.value.toInt()
+                            when {
+                                 iYear > 1582 -> viewModel.changeYear(iYear)
+                            }
+                            openDialog.value = false;
+                            textState.value = ""
+                        }
+                    )
                 )
             },
             confirmButton = {}
