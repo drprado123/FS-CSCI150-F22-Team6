@@ -86,6 +86,7 @@ fun DailyScreen(
 
 @Composable
 fun DayEventListItem(event: Event, viewModel: EventViewModel){
+    // openDialog is used to open and close the alert dialogue box.
     val openDialog = remember { mutableStateOf(false) }
 
     Row() {
@@ -116,6 +117,9 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
     }
 
     if (openDialog.value) {
+        // Alert dialog box will open when user selects a given event on the day calendar view.
+        // Options within this will include safely deleting the event and announcing
+        // the event on Discord.
         AlertDialog(
             backgroundColor = alertBackgroundColor,
             onDismissRequest = {
@@ -135,6 +139,7 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
+                            // Deleting given event from database
                             viewModel.deleteEvent(event)
                             openDialog.value = false
                         }
@@ -144,6 +149,7 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
+                            // Announcing event on Discord.
                             networkrequest(event)
                             openDialog.value = false
                         }

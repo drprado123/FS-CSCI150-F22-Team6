@@ -22,7 +22,6 @@ private val LightColorPalette = lightColors(
     background = tealBackground,
     onPrimary = darkGrey
 
-
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -33,6 +32,7 @@ private val LightColorPalette = lightColors(
     */
 )
 
+// Additional color theme variables
 var alertBackgroundColor = Color.White
 var nonCurrentMonthDayColor = Color.LightGray
 var currentMonthDayColor = Color.Black
@@ -50,12 +50,13 @@ fun OmegaCalendarTheme(
         LightColorPalette
     }
 
+    // Following condition will change the color scheme palette for additional components.
     if (darkTheme){
         alertBackgroundColor = Color.DarkGray
         nonCurrentMonthDayColor = Color(100,100,100)
         currentMonthDayColor = Color.White
         monthEventTextColor = Color.Black
-        monthEventColor = Color(200,50,0)
+        monthEventColor = Color(177,156,217)
 
     } else{
         alertBackgroundColor = Color.White
