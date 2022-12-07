@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 //add args to  event model as needed to set what is seen in a view model MUST REFLECT CHANGES
 // IN VIEWMODEL FACTORY
 // can also query using viewmodel functions
+// viewmodel holds the state of UI and state of database access viewmodel within activities to access this state.
 class EventViewModel(
     private val dao: EventDao,
     cal: Calendar = GregorianCalendar.getInstance()
