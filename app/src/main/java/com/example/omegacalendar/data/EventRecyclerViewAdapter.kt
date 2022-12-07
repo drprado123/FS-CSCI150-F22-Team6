@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.omegacalendar.R
-
+// This was used for testing before app components were integrated, Anthony didn't know compose so he wrote this to setup a dynamic list that reflects changes.
 class EventRecyclerViewAdapter(): RecyclerView.Adapter<EventViewHolder>() {
     private val eventList = ArrayList<Event>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
