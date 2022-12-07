@@ -72,7 +72,6 @@ fun DayComponent(
             text = day.toString(),//date number
             modifier = Modifier
                 .padding(start = 8.dp, top = 4.dp)
-                //.fillMaxWidth()
                 .align(alignment = Alignment.Start),
             color = if (weekNum == 0 && day in 21..31){
                 nonCurrentMonthDayColor
@@ -154,10 +153,7 @@ fun MonthComponent(
     onDayClicked:(Int,Int,Int) -> Unit,
     m:Int,
     y:Int,
-    navController: NavController
-){//(monthUiState: MonthUiState) {//(cal: GregorianCalendar){
-    //var y by rememberSaveable { mutableStateOf(cal.get(Calendar.YEAR)) }
-    //var m by rememberSaveable { mutableStateOf(cal.get(Calendar.MONTH)) }
+){
 
     val mn = OMonth(m, y)
 
@@ -166,13 +162,11 @@ fun MonthComponent(
 
             //top row; button-month-button-year
             Box(modifier = Modifier.fillMaxWidth()) {
-                //Row(modifier = Modifier.align(Alignment.Center)){
                 Button(
                     onClick = { onPrevMonthButtonClicked() },
                     modifier = Modifier.padding(start = 52.dp)
 
                 ) {
-                    //Text(text = "<", fontSize = 16.sp)
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = null//stringResource(R.string.back_button)
@@ -181,7 +175,7 @@ fun MonthComponent(
                 Text(
                     text = mn.monthName,
                     modifier = Modifier
-                        .wrapContentWidth() //align = Alignment.CenterHorizontally)
+                        .wrapContentWidth()
                         .padding(horizontal = 12.dp)
                         .align(Alignment.Center),
                     fontSize = 32.sp
@@ -193,7 +187,6 @@ fun MonthComponent(
                         .align(Alignment.CenterEnd)
                         .padding(end = 52.dp)
                 ) {
-                    //Text(text = ">", fontSize = 16.sp)
                     Icon(
                         imageVector = Icons.Filled.ArrowForward,
                         contentDescription = null//stringResource(R.string.back_button)
@@ -203,14 +196,6 @@ fun MonthComponent(
 
                 //button to choose the year
                 yearButton(yr = y, modifier = Modifier.align(Alignment.CenterEnd),viewModel)
-                //Text(
-                //    text = y.toString(),
-                //    modifier = Modifier
-                //        .wrapContentWidth()
-                //        .align(Alignment.CenterEnd)
-                //        .padding(end = 12.dp)
-                //        .clickable(onClick = {yearPopup()})
-                //)
             }
 
             //second row; names of the months
@@ -336,20 +321,3 @@ fun getFirstDayOfMonth(mn : Int, yr : Int):Int { //day of the week of the
 
 }
 
-@Composable
-fun ShowMonth(month:Int, day:Int, year:Int){
-    Column {
-        Text(text = "month: $month", fontSize = 16.sp)
-        Text(text = "day: $day", fontSize = 16.sp)
-        Text(text = "year: $year", fontSize = 16.sp)
-    }
-}
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    val rightNow = GregorianCalendar(2022,11,5)//.getInstance()
-//
-//    OmegaCalendarTheme {
-//        MonthComponent(rightNow)
-//    }
-//}

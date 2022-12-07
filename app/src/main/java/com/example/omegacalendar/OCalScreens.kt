@@ -24,16 +24,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModelFactory
-import com.example.omegacalendar.ui.ShowMonth
 import androidx.navigation.navArgument
 import com.example.omegacalendar.ui.DailyScreen
-
-enum class OCalScreen(){
-    Month,
-    Day,
-}
-
-var DayTemp:Int=0
 
 @Composable
 fun OmegaAppBar(
@@ -95,25 +87,15 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                         viewModel.prevMonthButton()
                     },
                     onDayClicked = {monthNum, dayNum, yearNum ->
-                        navController.navigate("day/$monthNum/$dayNum/$yearNum")//?monthNum={monthNum},dayNum={dayNum},yearNum={yearNum}")
+                        navController.navigate("day/$monthNum/$dayNum/$yearNum")
                     },
                     viewModel = viewModel,
                     m = uiState.mnNum,
-                    y = uiState.yrNum,
-                    navController = navController
+                    y = uiState.yrNum
                 )
             }
-//            composable(route = OCalScreen.Day.name) {
-//                DailyScreen(
-////                    day = OCalScreen.Day.name,
-//                    day = DayTemp,
-//                    month = uiState.mnNum,
-//                    year = uiState.yrNum,
-//                    modifier = Modifier,
-//                    viewModel = viewModel
-//                )
-//            }
-            composable(route = "day/{monthNum}/{dayNum}/{yearNum}",//?monthNum={monthNum},dayNum={dayNum},yearNum={yearNum}",
+
+            composable(route = "day/{monthNum}/{dayNum}/{yearNum}",
                 arguments = listOf(
                     navArgument("monthNum") {type = NavType.IntType},
                     navArgument("dayNum") {type = NavType.IntType},
@@ -126,29 +108,13 @@ fun OmegaCalendarApp(modifier: Modifier = Modifier, viewModel: EventViewModel){
                 val y = backStackEntry.arguments?.getInt("yearNum") ?: 0
 
                 DailyScreen(
-//                    day = OCalScreen.Day.name,
                     day = d,
                     month = m,
                     year = y,
                     modifier = Modifier,
                     viewModel = viewModel
                 )
-
-                //ShowMonth(month = m, day = d, year = y)
             }
-
-            //composable(route = CupcakeScreen.Flavor.name) {
-            //    val context = LocalContext.current
-            //    SelectOptionScreen(
-            //        subtotal = uiState.price,
-            //        onNextButtonClicked = {
-            //            navController.navigate(CupcakeScreen.Pickup.name)
-            //        },
-            //        onCancelButtonClicked = {cancelOrderAndNavigateToStart(viewModel, navController)},
-            //        options = flavors.map{ id -> stringResource(id) },
-            //        onSelectionChanged = {viewModel.setFlavor(it)}
-            //    )
-            //}
         }
     }
 }

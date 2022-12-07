@@ -89,7 +89,6 @@ class OMonth (mn:Int, yr:Int) {
         lastDay:Int = getNumOfDays(month, year)//lastDayOfMonth
     ):List<Int>{
         var sDay = startDay
-        //var lDay = lastDay
         val week = mutableListOf<Int> ()
         var i = 0
 

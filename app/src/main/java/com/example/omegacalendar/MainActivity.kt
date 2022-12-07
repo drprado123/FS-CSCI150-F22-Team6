@@ -1,7 +1,6 @@
 package com.example.omegacalendar
 
 import android.content.Context
-import android.icu.util.GregorianCalendar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,14 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.omegacalendar.data.AppDatabase
 import com.example.omegacalendar.data.EventViewModel
 import com.example.omegacalendar.data.EventViewModelFactory
-import com.example.omegacalendar.ui.MonthComponent
-import com.example.omegacalendar.ui.NetworkStuffs.networkrequest
 import com.example.omegacalendar.ui.theme.OmegaCalendarTheme
-//import com.example.omegacalendar.data.Event
-//import androidx.room.Database
-//import androidx.room.Room
-//import androidx.room.RoomDatabase
-//import com.example.omegacalendar.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
     private lateinit var viewModel : EventViewModel
@@ -60,11 +52,4 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    OmegaCalendarTheme {
-//
-//    }
-//}
 
