@@ -48,8 +48,8 @@ fun DailyScreen(
     viewModel: EventViewModel,
 ){
     val events = viewModel.getEventsByDayOrdered(month, day, year).observeAsState(listOf()).value
-    val monthName = when (month-1) {
-        0 -> "Jan"
+    val monthName = when (month-1) {        // This is where month gets checked depending on the value
+        0 -> "Jan"                          //  it will display the month name shortened.
         1 -> "Feb"
         2 -> "Mar"
         3 -> "Apr"
@@ -64,35 +64,37 @@ fun DailyScreen(
         else -> "Invalid month"
     }
 
-    Column(modifier = Modifier.wrapContentWidth()){
+    Column(modifier = Modifier.wrapContentWidth()){         // This gets the display of both the Row and the Lazy Column of Events
         Row(){
             Text(
-                text = monthName + " " + day.toString() + ", " + year.toString(),
+                text = monthName + " " + day.toString() + ", " + year.toString(),   // This line Displays the Month Day and Year.
+                                                                                    // When it Comes to Month it runs the month name function and the corresponding text
                 modifier = Modifier
                     .padding(16.dp),
                 style = MaterialTheme.typography.h3
             )
         }
-        DayEventList(events, viewModel)
+        DayEventList(events, viewModel)                                             // This function populates the row with Events with there corresponding start time and end time.
+                                                                                    // Via a Lazy function.
 
     }
 }
 
 
 @Composable
-fun DayEventListItem(event: Event, viewModel: EventViewModel){
+fun DayEventListItem(event: Event, viewModel: EventViewModel){          // event is from the event database, and ViewModel is the month day year from the Month Screen
     // openDialog is used to open and close the alert dialogue box.
     val openDialog = remember { mutableStateOf(false) }
 
-    Row() {
-        Card() {
-            Row(
+    Row() {                         // Makes it a Row for layout
+        Card() {                    // Has the Row be set in the Card layout preset
+            Row(                    // Has the Card be organized as a row
                 modifier = Modifier
                     .clickable(onClick = {
                         openDialog.value=true
                     })
             ) {
-                Text(
+                Text(               // This display the Event Description. Grabs from the event database
                     text = event.desc,
                     modifier = Modifier
                         .padding(16.dp)
@@ -100,7 +102,7 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
                         .weight(10 / 16f),
                     style = MaterialTheme.typography.h6
                 )
-                    Text(
+                    Text(           // This displays the event Time start and end. Grabs from the event database.
                         text = event.startHour.toString() + " - " + event.startMin.toString(),
                         modifier = Modifier
                             .padding(top = 15.dp)
@@ -165,7 +167,7 @@ fun DayEventListItem(event: Event, viewModel: EventViewModel){
 
 @Composable
 fun DayEventList(events: List<Event>, viewModel: EventViewModel){
-    LazyColumn() {
+    LazyColumn() {      // Creates the events as an an item which get information from the event data base and the month ViewModel
         items(events) { event ->
             DayEventListItem(event, viewModel)
             Divider()
