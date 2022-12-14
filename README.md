@@ -7,3 +7,5 @@ Omega Calendar is an Android calendar app developed in Kotlin with discord linka
 
 
 [Link to Youtube video](https://www.youtube.com/watch?v=qc7tO-g21Ws&ab_channel=DevinPrado)
+
+[Link to Project Board](https://github.com/users/drprado123/projects/1/views/1)
