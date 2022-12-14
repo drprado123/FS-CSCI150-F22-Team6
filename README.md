@@ -1,5 +1,5 @@
 # OmegaCalendar
-Omega Calendar is an Android calendar app developed in Kotlin with discord linkage. Omega calendar allows users to send Discord notifications about their calendar events. Additionally, Omega Calendar is equipped with a custom database and an accompanying Discord bot to configure servers for announcements. This facilitates ease of use and convenience for the user.
+Omega Calendar is an Android calendar app developed in Kotlin with discord linkage. Omega calendar allows users to send Discord notifications about their calendar events. Additionally, Omega Calendar is equipped with a custom database. To view actual code files, they exist within the AndroidStudioProject folder and can all be found and ran there. All documentation and deliverables exist in the other folder, but also links to their online formats are displayed below.
 --------------
 [Link to SRS Documentation](https://docs.google.com/document/d/1yeITOsfgF1X1Quzt2Hch7HRa2fpBxxntKvCUCo332tI/edit?usp=sharing)
 
