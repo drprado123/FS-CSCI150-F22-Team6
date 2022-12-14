@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-object ServiceBuilder {
+object ServiceBuilder { //service builder for network object usage
     private val client = OkHttpClient.Builder().build()
 
     private val retrofit = Retrofit.Builder()
